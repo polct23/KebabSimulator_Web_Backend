@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #fbf1a9 !important;
+        }
+        h1 {
+            text-align: center;
+            font-family: 'Mouse Memoirs', sans-serif;
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h2 id="form-title">Register</h2>
+            <form id="register-form" action="/users/newUser" method="post" class="form-signin">
+                <input type="text" id="register-username" name="userName" class="form-control form-control-sm" placeholder="Username" required autofocus>
+                <input type="password" id="register-password" name="password" class="form-control form-control-sm" placeholder="Password" required>
+                <button class="btn btn-lg btn-primary btn-block btn-sm" type="submit">Register</button>
+            </form>
+            <a href="index.html">Go back</a>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script>
+    $('#register-form').on('submit', function(event) {
+        var username = $('#register-username').val();
+        var password = $('#register-password').val();
+
+        if (username === '' || password === '') {
+            alert('Username and password cannot be empty');
+            event.preventDefault();
+        }
+
+        if (password.length < 8) {
+            alert('Password must be at least 8 characters long');
+            event.preventDefault();
+        }
+    });
+
+    document.getElementById('register-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        alert('User registered successfully!');
+        window.location.href = 'index.html';
+    });
+</script>
+</body>
+</html>
