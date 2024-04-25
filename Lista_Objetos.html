@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Github User Search</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron jumbotron-fluid">
+        <h1 class="text-primary">Listar los items de la tienda</h1>
+    </div>
+
+    
+        
+
+
+    <button type="button" class="btn btn-primary" onclick="buscarObjetos()">Buscar</button>
+</div>
+<img src="https://ccladehesa.es/img_v2/directorio/locales/local-356-9g88rbju.jpg" class="mx-auto d-block" alt="Cinque Terre" width="400" height="200">
+
+<div id="Repositories" class="container mt-4"></div>
+
+<script>
+    function buscarObjetos() {
+        let usuario = document.getElementById("user").value;
+        let urlRepos = `https://kebab.com/getObjetos;
+        fetch(urlRepos)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else if (response.status === 404) {
+                    throw new Error('User not found');
+                } else {
+                    throw new Error('Error');
+                }
+            })
+            .then(data => mostrarTablaobjetos(data))
+            .catch(error => mostrarError(error));
+    }
+
+    function mostrarTablaobjetos(data) {
+
+        let tablaHTML = '<div class="jumbotron"><h1>Repositories</h1></div>';
+        tablaHTML += '<table class="table">';
+        tablaHTML += '<thead><tr><th>Nombre</th><th>descripcion</th>><th>Precio</th></tr></thead>';
+        tablaHTML += '<tbody>';
+
+
+        for (let i = 0; i < data.length; i++) {
+            
+            tablaHTML += `<tr><td>${data[i].nombre}</td><td>${data[i].descripcion}</td><td>${data[i].precio}</td></tr>`;
+        }
+
+        tablaHTML += '</tbody></table>';
+
+
+        var blob = new Blob([`
+                <!DOCTYPE html>
+                <html lang="es">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Repositories</title>
+                    <!-- Agregar enlaces a Bootstrap CSS -->
+                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+                </head>
+                <body>
+                    ${tablaHTML}
+                </body>
+                </html>
+            `], { type: 'text/html' });
+
+        // Crear una URL para el Blob
+        var urlBlob = URL.createObjectURL(blob);
+
+        // Abrir una nueva pestaña con el contenido HTML
+        window.open(urlBlob, '_blank');
+
+        // Liberar recursos del Blob
+        URL.revokeObjectURL(urlBlob);
+    }
+
+    function mostrarError(error) {
+        // Mostrar un mensaje de error en caso de usuario no encontrado
+        document.getElementById('Repositories').innerHTML = `<div class="alert alert-danger"><strong>${error.message}</strong></div>`;
+    }
+</script>
+</body>
+</html>
