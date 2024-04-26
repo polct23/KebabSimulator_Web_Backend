@@ -72,11 +72,15 @@ public class UserListImpl implements UserList {
     }
     @Override
     public boolean authenticateUser(String userName, String password) {
+        boolean ans = false;
         for(User u : this.users) {
-            
             if(u.getUserName().equals(userName) && u.getPassword().equals(password)) {
-
+                ans = true;
+                break;
             }
         }
+        if(ans)
+            return true;
+        else return false;
     }
 }

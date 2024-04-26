@@ -89,8 +89,7 @@ public class UsersService {
         return Response.status(201).build();
     }
 
-
-    @POST //Utilizamos POST ya que al usar metodos de autentificacion es más seguro
+    @POST
     @ApiOperation(value = "User Login", notes = "Verifies user credentials.")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Login Successful"),
@@ -101,11 +100,13 @@ public class UsersService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response loginUser(User user) {
         if (ul.authenticateUser(user.getUserName(), user.getPassword())) {
-            return Response.status(201).build();
+            return Response.status(Response.Status.OK).entity("{\"message\":\"Login Successful\"}").build();
         } else {
-            return Response.status(401).build();
+            return Response.status(Response.Status.UNAUTHORIZED).entity("{\"message\":\"Unauthorized - Incorrect username or password\"}").build();
         }
     }
+
+
 
 
 
