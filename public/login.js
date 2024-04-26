@@ -18,6 +18,7 @@ function handleLogin(username, password) {
         .then(data => {
             if (data.message === "Login Successful") {
                 console.log('Login successful');
+                alert("Loged successfully");
                 localStorage.setItem('userStatus', 'loggedIn');
             } else {
                 throw new Error(data.message);

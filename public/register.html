@@ -30,27 +30,6 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script>
-    $('#register-form').on('submit', function(event) {
-        var username = $('#register-username').val();
-        var password = $('#register-password').val();
-
-        if (username === '' || password === '') {
-            alert('Username and password cannot be empty');
-            event.preventDefault();
-        }
-
-        if (password.length < 8) {
-            alert('Password must be at least 8 characters long');
-            event.preventDefault();
-        }
-    });
-
-    document.getElementById('register-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        alert('User registered successfully!');
-        window.location.href = 'index.html';
-    });
-</script>
+<script src="register.js"></script>
 </body>
 </html>
