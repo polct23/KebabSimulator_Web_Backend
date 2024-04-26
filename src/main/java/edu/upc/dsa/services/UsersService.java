@@ -23,8 +23,13 @@ public class UsersService {
 
     public UsersService() {
         this.ul = UserListImpl.getInstance();
-        if(ul.size()==0) {
-            this.ul.addUser("admin", "admin");
+        initializeAdminUser();
+    }
+    private void initializeAdminUser() {
+        if (ul.size() == 0) {
+            ul.addUser(new User("admin", "admin"));
+            // Asegúrate de que "addUser" realmente añade el usuario a la lista
+            // y que la implementación del usuario maneja correctamente la adición.
         }
     }
 
@@ -69,6 +74,8 @@ public class UsersService {
         this.ul.addUser(newUser);
         return Response.status(201).entity(newUser).build();
     }
+
+
     @PUT
     @ApiOperation(value = "update User Password", notes = "---")
     @ApiResponses(value = {
@@ -81,5 +88,25 @@ public class UsersService {
         if(u==null) return Response.status(404).build();
         return Response.status(201).build();
     }
+
+
+    @POST //Utilizamos POST ya que al usar metodos de autentificacion es más seguro
+    @ApiOperation(value = "User Login", notes = "Verifies user credentials.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Login Successful"),
+            @ApiResponse(code = 401, message = "Unauthorized")
+    })
+    @Path("/login")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response loginUser(User user) {
+        if (ul.authenticateUser(user.getUserName(), user.getPassword())) {
+            return Response.status(201).build();
+        } else {
+            return Response.status(401).build();
+        }
+    }
+
+
 
 }

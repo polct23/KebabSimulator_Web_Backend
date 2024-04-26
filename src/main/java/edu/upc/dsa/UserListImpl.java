@@ -31,16 +31,16 @@ public class UserListImpl implements UserList {
         return user;
     }
     public User addUser(String userName, String password) {return this.addUser(new User(userName, password));}
-    public User getUser(String id) {
-        logger.info("getUser(" + id + ")");
+    public User getUser(String userName) {
+        logger.info("getUser(" + userName + ")");
 
         for(User user : this.users) {
-            if(user.getIdUser().equals(id)) {
-                logger.info("getUser(" + id + "): " + user);
+            if(user.getUserName().equals(userName)) {
+                logger.info("getUser(" + userName + "): " + user);
                 return user;
             }
         }
-        logger.info("not found " + id);
+        logger.info("not found " + userName);
         return null;
     }
     public List<User> getUsers() {return this.users;}
@@ -69,5 +69,14 @@ public class UserListImpl implements UserList {
         }
         else logger.warn("not found" + user);
         return user;
+    }
+    @Override
+    public boolean authenticateUser(String userName, String password) {
+        for(User u : this.users) {
+            
+            if(u.getUserName().equals(userName) && u.getPassword().equals(password)) {
+
+            }
+        }
     }
 }

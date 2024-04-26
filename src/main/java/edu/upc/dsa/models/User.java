@@ -39,6 +39,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "Track [id="+idUser+", title=" + userName + ", singer=" + password +"]";
+        return "User [id="+idUser+", userName=" + userName + ", password=" + password +"]";
     }
 }
