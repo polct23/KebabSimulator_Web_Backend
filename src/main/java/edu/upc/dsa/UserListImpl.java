@@ -51,8 +51,11 @@ public class UserListImpl implements UserList {
         if(u != null) {
             logger.warn("not found " + u);
         }
-        else logger.info(u + "deleted ");
-        this.users.remove(u);
+        else{
+            logger.info(u + "deleted ");
+            this.users.remove(u);
+        }
+
     }
 
     @Override
