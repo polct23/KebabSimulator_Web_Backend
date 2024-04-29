@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kebab Simulator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Mouse+Memoirs&display=swap');
+        body {
+            background-color: #fbf1a9 !important;
+            font-family: 'Arial', sans-serif; /* Más legible que las fuentes más decorativas para el contenido */
+        }
+        h1 {
+            text-align: center;
+            font-family: 'Mouse Memoirs', sans-serif;
+            margin-top: 50px; /* Ajuste estético */
+            color: #6c757d; /* Gris suave */
+        }
+        #weapons-list {
+            padding-left: 0; /* Estilo limpio para la lista */
+        }
+        .card {
+            border-radius: 15px; /* Esquinas redondeadas */
+            background-color: #f8d7da; /* Color de fondo suave para las tarjetas */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Sombra sutil para dar profundidad */
+            color: #495057; /* Color de texto oscuro para mejor contraste */
+            margin-bottom: 20px; /* Espacio entre tarjetas */
+        }
+        .card-body {
+            padding: 20px; /* Espaciado interno adecuado */
+        }
+        .list-group-item {
+            margin-bottom: 10px; /* Espaciado entre elementos de lista */
+        }
+        .list-group-item:last-child {
+            border-bottom: none; /* No duplicar borde en el último item */
+        }
+    </style>
+</head>
+<body>
+<h1>Kebab Simulator</h1>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <ul id="weapons-list" class="list-group">
+                <!-- Los datos de las armas se cargarán aquí por el script fetchWeapons.js -->
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script src="fetchWeapons.js"></script>
+</body>
+</html>

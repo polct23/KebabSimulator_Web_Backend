@@ -24,6 +24,8 @@ public class WeaponsService {
 
     public WeaponsService() {
         this.wl = WeaponListImpl.getInstance();
+        wl.addWeapon("01","Palo", "Es un palo de la leche", 17, 12.5);
+        wl.addWeapon("02","Cuchillo", "Es un cuchillo muy afilado", 24, 15);
     }
 
     @GET
