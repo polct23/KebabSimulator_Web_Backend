@@ -20,12 +20,10 @@ import java.util.List;
 @Api(value = "/weapons", description = "Endpoint to Weapon Service")
 @Path("/weapons")
 public class WeaponsService {
-    private WeaponList wl;
+    private final WeaponList wl;
 
     public WeaponsService() {
         this.wl = WeaponListImpl.getInstance();
-        wl.addWeapon("01","Pollita", "Es un palo de la leche", 17, 12.5);
-        wl.addWeapon("02","TronchoCarne", "Es un cuchillo muy afilado", 24, 15);
     }
 
     @GET

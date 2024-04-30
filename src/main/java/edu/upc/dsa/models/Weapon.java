@@ -9,7 +9,8 @@ public class Weapon {
 
     //private int level - Por si queremos hacer nivelado de armas
 
-    public Weapon(){};
+    public Weapon(){}
+
     public Weapon(String idWeapon, String weaponName, String description, int damage, double price){
         this.idWeapon = idWeapon;
         this.weaponName = weaponName;

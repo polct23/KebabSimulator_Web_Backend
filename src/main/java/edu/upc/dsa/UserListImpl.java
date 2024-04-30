@@ -40,9 +40,6 @@ public class UserListImpl implements UserList {
         }
         else
             return null;
-
-
-
     }
     public User addUser(String userName, String password) {return this.addUser(new User(userName, password));}
     public User getUser(String userName) {
@@ -96,8 +93,6 @@ public class UserListImpl implements UserList {
                 break;
             }
         }
-        if(ans)
-            return true;
-        else return false;
+        return ans;
     }
 }

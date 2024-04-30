@@ -19,7 +19,7 @@ import java.util.List;
 @Api(value = "/users", description = "Endpoint to User Service")
 @Path("/users")
 public class UsersService {
-    private UserList ul;
+    private final UserList ul;
 
     public UsersService() {
         this.ul = UserListImpl.getInstance();
