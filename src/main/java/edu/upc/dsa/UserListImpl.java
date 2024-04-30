@@ -26,9 +26,23 @@ public class UserListImpl implements UserList {
 
     public User addUser(User user) {
         logger.info("addUser " + user);
-        this.users.add(user);
-        logger.info("new user added");
-        return user;
+        int i = 0;
+        for(User u : this.users) {
+            if(u.getUserName().equals(user.getUserName())) {
+                i = 1;
+                break;
+            }
+        }
+        if(i == 0){
+            this.users.add(user);
+            logger.info("new user added");
+            return user;
+        }
+        else
+            return null;
+
+
+
     }
     public User addUser(String userName, String password) {return this.addUser(new User(userName, password));}
     public User getUser(String userName) {

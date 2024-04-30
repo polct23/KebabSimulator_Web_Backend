@@ -64,15 +64,19 @@ public class UsersService {
     @ApiOperation(value = "create a new User", notes = "---")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response=User.class),
-            @ApiResponse(code = 500, message = "Validation error")
+            @ApiResponse(code = 500, message = "Validation error"),
+            @ApiResponse(code = 409, message = "Validation conflict")
     })
     @Path("/newUser")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response newUser(User user) {
         User newUser = new User(user.getUserName(), user.getPassword());
         if(newUser.getUserName()==null || newUser.getPassword()==null) return Response.status(500).entity(newUser).build();
-        this.ul.addUser(newUser);
-        return Response.status(201).entity(newUser).build();
+        User us = this.ul.addUser(newUser);
+        if(us == null)
+            return Response.status(409).build();
+        else
+            return Response.status(201).entity(newUser).build();
     }
 
 
