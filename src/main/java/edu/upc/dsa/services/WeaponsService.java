@@ -29,7 +29,7 @@ public class WeaponsService {
     @GET
     @ApiOperation(value = "get all Weapons", notes = "---")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Weapon.class, responseContainer = "List")
+            @ApiResponse(code = 200, message = "Successful", response = Weapon.class, responseContainer = "List")
     })
     @Path("/getWeapons")
     @Produces(MediaType.APPLICATION_JSON)

@@ -36,7 +36,7 @@ public class UsersService {
     @GET
     @ApiOperation(value = "get all Users", notes = "---")//Que ponemos en notes?
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer = "List")
+            @ApiResponse(code = 200, message = "Successful", response = User.class, responseContainer = "List")
     })
     @Path("/getUsers")
     @Produces(MediaType.APPLICATION_JSON)
@@ -49,7 +49,7 @@ public class UsersService {
     @GET
     @ApiOperation(value = "get User", notes = "---")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = User.class),
+            @ApiResponse(code = 200, message = "Successful", response = User.class),
             @ApiResponse(code = 404, message = "User not found")
     })
     @Path("/getUser/{id}")
@@ -83,7 +83,7 @@ public class UsersService {
     @PUT
     @ApiOperation(value = "update User Password", notes = "---")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 404, message = "User not found")
     })
     @Path("/updateUserPassword")
@@ -112,7 +112,7 @@ public class UsersService {
     @DELETE
     @ApiOperation(value = "Delete User", notes = "Deletes a user from list.")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 404, message = "User not found"),
             @ApiResponse(code = 403, message = "Forbidden - Incorrect username or password")
     })
