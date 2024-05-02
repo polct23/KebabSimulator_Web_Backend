@@ -109,6 +109,22 @@ public class UsersService {
             return Response.status(Response.Status.UNAUTHORIZED).entity("{\"message\":\"Unauthorized - Incorrect username or password\"}").build();
         }
     }
+    @DELETE
+    @ApiOperation(value = "Delete User", notes = "Deletes a user from list.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 403, message = "Forbidden - Incorrect username or password")
+    })
+    @Path("/deleteUser/{username}/{password}")
+    public Response deleteUser(@PathParam("username") String username, @PathParam("password") String password) {
+        if (ul.authenticateUser(username, password)) {
+            this.ul.deleteUser(username);
+            return Response.status(201).build();
+        } else {
+            return Response.status(Response.Status.FORBIDDEN).entity("{\"message\":\"Forbidden - Incorrect username or password\"}").build();
+        }
+    }
 
 
 
