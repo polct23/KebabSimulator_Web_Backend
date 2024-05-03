@@ -36,7 +36,7 @@ public class WeaponsService {
     public Response getWeapons() {
         List<Weapon> weapons = wl.getWeapons();
         GenericEntity<List<Weapon>> entity = new GenericEntity<List<Weapon>>(weapons) {};
-        return Response.status(201).entity(entity).build();
+        return Response.status(200).entity(entity).build();
     }
 
     @POST
