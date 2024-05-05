@@ -44,7 +44,7 @@ public class UsersService {
         List<User> users = this.ul.getUsers();
 
         GenericEntity<List<User>> entity = new GenericEntity<List<User>>(users) {};
-        return Response.status(201).entity(entity).build();
+        return Response.status(200).entity(entity).build();
     }
     @GET
     @ApiOperation(value = "get User", notes = "---")
@@ -57,7 +57,7 @@ public class UsersService {
     public Response getUser(@PathParam("id") String id) {
         User user = this.ul.getUser(id);
         if(user==null) return Response.status(404).build();
-        else return Response.status(201).entity(user).build();
+        else return Response.status(200).entity(user).build();
     }
 
     @POST
@@ -120,7 +120,7 @@ public class UsersService {
     public Response deleteUser(@PathParam("username") String username, @PathParam("password") String password) {
         if (ul.authenticateUser(username, password)) {
             this.ul.deleteUser(username);
-            return Response.status(201).build();
+            return Response.status(200).build();
         } else {
             return Response.status(Response.Status.FORBIDDEN).entity("{\"message\":\"Forbidden - Incorrect username or password\"}").build();
         }
