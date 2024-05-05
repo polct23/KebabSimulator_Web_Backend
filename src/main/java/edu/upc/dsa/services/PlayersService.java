@@ -1,5 +1,6 @@
 package edu.upc.dsa.services;
 
+import edu.upc.dsa.models.User;
 import edu.upc.dsa.models.Player;
 import edu.upc.dsa.PlayerList;
 import edu.upc.dsa.PlayerListImpl;
@@ -57,8 +58,8 @@ public class PlayersService {
     })
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response newPlayer(Player player) {
-        Player newPlayer = new Player(player.getIdPlayer());
+    public Response newPlayer(User user) {
+        Player newPlayer = new Player(user.getIdUser());
         if(newPlayer.getIdPlayer() == null) return Response.status(500).build();
         Player pl = this.pl.addPlayer(newPlayer);
         if(pl == null) return Response.status(409).build();
