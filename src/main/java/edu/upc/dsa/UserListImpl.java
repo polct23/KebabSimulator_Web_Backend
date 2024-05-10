@@ -41,7 +41,7 @@ public class UserListImpl implements UserList {
         else
             return null;
     }
-    public User addUser(String userName, String password) {return this.addUser(new User(userName, password));}
+    public User addUser(String userName, String password, String email) {return this.addUser(new User(userName, password, email));}
     public User getUser(String userName) {
         logger.info("getUser(" + userName + ")");
 

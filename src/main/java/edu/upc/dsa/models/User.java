@@ -5,12 +5,23 @@ public class User {
     private String idUser;
     private String userName;
     private String password;
+    private String email;
 
     public User(){ this.idUser = RandomUtils.getId(); }
-    public User(String userName, String password) {
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public User(String userName, String password, String email) {
         this();
         this.userName = userName;
         this.password = password;
+        this.email = email;
     }
 
     public String getIdUser() {

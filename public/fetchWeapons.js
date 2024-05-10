@@ -1,14 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const savedWeapons = localStorage.getItem('weapons');
-    if (savedWeapons) {
-        displayWeapons(JSON.parse(savedWeapons));
-    } else {
-        fetchWeapons();
-    }
+    fetchWeapons(); // Siempre tratar de obtener la versión más reciente de las armas
 });
 
 function fetchWeapons() {
-    fetch('http://localhost:8080/dsaApp/weapons/getWeapons')
+    fetch('http://localhost:8080/dsaApp/weapons/getWeapons', {
+        headers: {
+            'Cache-Control': 'no-cache', // Indica al navegador no almacenar la respuesta en caché
+            'Pragma': 'no-cache' // Compatibilidad con HTTP/1.0
+        }
+    })
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok ' + response.statusText);
@@ -16,17 +16,18 @@ function fetchWeapons() {
             return response.json();
         })
         .then(data => {
-            localStorage.setItem('weapons', JSON.stringify(data)); // Guardar en localStorage
-            displayWeapons(data);
+            displayWeapons(data); // Mostrar los datos directamente obtenidos del servidor
         })
         .catch(error => {
             console.error('Fetch error:', error);
+            alert('Failed to load weapons from server. Please try again later.');
         });
 }
 
+
 function displayWeapons(data) {
     const listElement = document.getElementById('weapons-list');
-    listElement.innerHTML = ''; // Asegúrate de que esta línea efectivamente está limpiando la lista
+    listElement.innerHTML = '';
     data.forEach(weapon => {
         const card = createWeaponCard(weapon);
         listElement.appendChild(card);

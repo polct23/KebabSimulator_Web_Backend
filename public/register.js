@@ -1,16 +1,27 @@
 document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('register-form').addEventListener('submit', function (event) {
-        event.preventDefault(); // Prevent the default form submission
-        var username = document.getElementById('register-username').value;
-        var password = document.getElementById('register-password').value;
+    const registerForm = document.getElementById('register-form');
+    registerForm.addEventListener('submit', function (event) {
+        event.preventDefault();
 
-        // Basic validation
-        if (!username || !password) {
-            alert('Username and password cannot be empty');
+        const email = document.getElementById('register-email').value;
+        const username = document.getElementById('register-username').value;
+        const password = document.getElementById('register-password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+
+        // Validación básica
+        if (!email || !username || !password) {
+            alert('Email, username and password cannot be empty');
             return;
         }
 
-        var data = {
+        // Verificar que las contraseñas coincidan
+        if (password !== confirmPassword) {
+            alert('Passwords do not match');
+            return;
+        }
+
+        const data = {
+            email: email,
             userName: username,
             password: password
         };
@@ -26,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!response.ok) {
                     throw new Error('Failed to register');
                 }
-                return response.json(); // Assuming the server responds with JSON
+                return response.json();
             })
             .then(responseData => {
                 alert('User registered successfully!');

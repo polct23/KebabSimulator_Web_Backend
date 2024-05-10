@@ -27,7 +27,7 @@ public class UsersService {
     }
     private void initializeAdminUser() {
         if (ul.size() == 0) {
-            ul.addUser(new User("admin", "admin"));
+            ul.addUser(new User("admin", "admin","admin@dsa.com"));
             // Asegúrate de que "addUser" realmente añade el usuario a la lista
             // y que la implementación del usuario maneja correctamente la adición.
         }
@@ -70,7 +70,7 @@ public class UsersService {
     @Path("/newUser")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response newUser(User user) {
-        User newUser = new User(user.getUserName(), user.getPassword());
+        User newUser = new User(user.getUserName(), user.getPassword(), user.getEmail());
         if(newUser.getUserName()==null || newUser.getPassword()==null) return Response.status(500).entity(newUser).build();
         User us = this.ul.addUser(newUser);
         if(us == null)
