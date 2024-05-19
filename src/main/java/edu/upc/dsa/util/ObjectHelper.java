@@ -25,7 +25,14 @@ public class ObjectHelper {
         String setterName = "set" + propToUppercase;
 
         try {
-            Method m = object.getClass().getMethod(setterName, value.getClass());
+            Method m;
+            if (value instanceof Integer) {
+                m = object.getClass().getMethod(setterName, int.class);
+            } else if (value instanceof Double) {
+                m = object.getClass().getMethod(setterName, double.class);
+            } else {
+                m = object.getClass().getMethod(setterName, value.getClass());
+            }
 
             m.invoke(object, value);
         } catch (NoSuchMethodException e) {
