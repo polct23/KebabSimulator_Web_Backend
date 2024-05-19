@@ -19,16 +19,16 @@ async function handleLogin(username, password) {
 
         if (result.message === "Login Successful") {
             console.log('Login successful');
-
-            // Muestra un mensaje de alerta indicando que el inicio de sesión fue exitoso
-            alert("Logged in successfully");
-
             // Almacena el estado del usuario como autenticado en localStorage
             localStorage.setItem('userStatus', 'loggedIn');
             localStorage.setItem('username', username);
+            localStorage.setItem('password', password);
 
-            // Redirige a la página deseada solo después de que el usuario haya aceptado la alerta
-            window.location.href = '/listaObjetos.html';
+            // Muestra una alerta y redirige solo si el usuario acepta
+            alert("Login successful! You will be redirected.");
+            setTimeout(() => {
+                window.location.href = '/listaObjetos.html'; // Redirige a la página listaObjetos.html
+            }, 0);
         } else {
             // Si el mensaje no indica un inicio de sesión exitoso, lanza un error
             throw new Error(result.message || 'Unknown login error');
@@ -39,3 +39,13 @@ async function handleLogin(username, password) {
         alert("Error: " + error.message);
     }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    var loginForm = document.getElementById('login-form');
+    loginForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        var username = document.getElementById('login-username').value;
+        var password = document.getElementById('login-password').value;
+        handleLogin(username, password);
+    });
+});

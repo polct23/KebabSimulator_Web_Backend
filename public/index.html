@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Kebab Simulator</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
@@ -8,26 +9,27 @@
 
         body {
             background-color: #fbf1a9;
-            font-family: Arial, sans-serif; /* Agregado para mejorar la legibilidad general */
+            font-family: Arial, sans-serif;
         }
         h1 {
             text-align: center;
             font-family: 'Mouse Memoirs', sans-serif;
-            margin-top: 50px; /* Ajustado para menos espacio */
+            margin-top: 50px;
         }
         .container {
-            margin-top: 20px; /* Espacio adicional */
+            margin-top: 20px;
         }
         .kebab-image {
-            max-width: 100%; /* Asegura que la imagen sea responsiva */
-            height: auto; /* Mantiene la proporción */
+            max-width: 100%;
+            height: auto;
             display: block;
-            margin: 0 auto 20px; /* Centra la imagen y agrega espacio antes y después */
-            border-radius: 15px; /* Redondea los bordes de la imagen */
+            margin: 0 auto 20px;
+            border-radius: 15px;
         }
 
     </style>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="login.js"></script> <!-- Agregamos el script de login -->
 </head>
 <body>
 <h1>Kebab Simulator</h1>
@@ -43,21 +45,49 @@
                 <input type="password" id="login-password" name="login-password" class="form-control form-control-sm" placeholder="Password" required>
                 <button class="btn btn-lg btn-primary btn-block btn-sm" type="submit">Sign in</button>
             </form>
+            <!-- Opción para el inicio de sesión automático -->
+            <p id="auto-login-option" style="display: none;">If you want to login automatically, click <a href="#" id="auto-login-link">here</a>.</p>
             <p id="toggle-form">Don't have an account? <a href="register.html">Create one!</a></p>
         </div>
     </div>
 </div>
-<script src="login.js"></script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var loginForm = document.getElementById('login-form');
-        loginForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            var username = document.getElementById('login-username').value;
-            var password = document.getElementById('login-password').value;
-            handleLogin(username, password);
-            window.location.href = 'listaObjetos.html';
-        });
+        const userStatus = localStorage.getItem('userStatus');
+        const autoLoginShown = localStorage.getItem('autoLoginShown');
+
+        // Verifica si el usuario ya está autenticado y si hay credenciales almacenadas localmente
+        if (userStatus === 'loggedIn' && autoLoginShown !== 'true') {
+            // Si el usuario ha decidido registrarse nuevamente, muestra el mensaje de registro manualmente
+            const automaticLogin = confirm('You are already logged in. Do you want to log in automatically?');
+            if (automaticLogin) {
+                const storedUsername = localStorage.getItem('username');
+                const storedPassword = localStorage.getItem('password');
+                handleLogin(storedUsername, storedPassword);
+            } else {
+                // Si el usuario no ha decidido iniciar sesión automáticamente, establece la bandera para no mostrar la confirmación nuevamente
+                localStorage.setItem('autoLoginShown', 'true');
+                // Si el usuario no ha decidido iniciar sesion automaticamente se le envia a la pagina principal.
+                window.location.href = '/';
+            }
+        } else {
+            // Si el usuario no está autenticado, muestra la opción para el inicio de sesión automático
+            document.getElementById('auto-login-option').style.display = 'block';
+        }
+
+        // Establecer autoLoginShown a false después de 1 minuto (60000 ms)
+        setTimeout(() => {
+            localStorage.setItem('autoLoginShown', 'false');
+        }, 60000); // 1 minuto en milisegundos
+    });
+
+    // Opcionalmente, podrías permitir al usuario iniciar sesión automáticamente al hacer clic en el enlace
+    document.getElementById('auto-login-link').addEventListener('click', function(event) {
+        event.preventDefault();
+        const storedUsername = localStorage.getItem('username');
+        const storedPassword = localStorage.getItem('password');
+        handleLogin(storedUsername, storedPassword);
     });
 </script>
 </body>

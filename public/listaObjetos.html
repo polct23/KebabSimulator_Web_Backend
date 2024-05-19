@@ -8,32 +8,35 @@
         @import url('https://fonts.googleapis.com/css2?family=Mouse+Memoirs&display=swap');
         body {
             background-color: #fbf1a9 !important;
-            font-family: 'Arial', sans-serif; /* Más legible que las fuentes más decorativas para el contenido */
+            font-family: 'Arial', sans-serif;
         }
         h1 {
             text-align: center;
             font-family: 'Mouse Memoirs', sans-serif;
-            margin-top: 50px; /* Ajuste estético */
-            color: #6c757d; /* Gris suave */
+            margin-top: 50px;
+            color: #6c757d;
         }
         #weapons-list {
-            padding-left: 0; /* Estilo limpio para la lista */
+            padding-left: 0;
         }
         .card {
-            border-radius: 15px; /* Esquinas redondeadas */
-            background-color: #f8d7da; /* Color de fondo suave para las tarjetas */
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Sombra sutil para dar profundidad */
-            color: #495057; /* Color de texto oscuro para mejor contraste */
-            margin-bottom: 20px; /* Espacio entre tarjetas */
+            border-radius: 15px;
+            background-color: #f8d7da;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            color: #495057;
+            margin-bottom: 20px;
         }
         .card-body {
-            padding: 20px; /* Espaciado interno adecuado */
+            padding: 20px;
         }
         .list-group-item {
-            margin-bottom: 10px; /* Espaciado entre elementos de lista */
+            margin-bottom: 10px;
         }
         .list-group-item:last-child {
-            border-bottom: none; /* No duplicar borde en el último item */
+            border-bottom: none;
+        }
+        .alert-auto-login {
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -49,11 +52,31 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div id="message" class="alert" style="display: none;"></div>
+            <div id="message" class="alert alert-info alert-auto-login" style="display: none;">You have been automatically logged in.</div>
         </div>
     </div>
 </div>
 
+<script>
+    // Verifica si el usuario está autenticado
+    document.addEventListener('DOMContentLoaded', function() {
+        const userStatus = localStorage.getItem('userStatus');
+        if (userStatus !== 'loggedIn') {
+            alert('You must be logged in to access this page.');
+            window.location.href = '/';
+        }
+
+        // Verifica si hay un inicio de sesión automático
+        const autoLogin = localStorage.getItem('autoLogin');
+        if (autoLogin === 'true') {
+            // Muestra el mensaje de inicio de sesión automático
+            const message = document.getElementById('message');
+            message.style.display = 'block';
+            // Limpia el indicador de inicio de sesión automático
+            localStorage.removeItem('autoLogin');
+        }
+    });
+</script>
 <script src="fetchWeapons.js"></script>
 <script src="purchaseItem.js"></script>
 </body>
