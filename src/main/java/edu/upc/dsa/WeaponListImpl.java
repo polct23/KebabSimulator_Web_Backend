@@ -45,7 +45,16 @@ public class WeaponListImpl implements WeaponList{
         logger.info("not found " + idWeapon);
         return null;
     }
-    public List<Weapon> getWeapons() {return this.weapons;}
+    public List<Weapon> getWeapons() {
+        Session session = null;
+        try {
+            session = FactorySession.openSession();
+            this.weapons = session.findAll(Weapon.class);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return this.weapons;
+    }
 
     @Override
     public void deleteWeapon(String idWeapon) {

@@ -25,6 +25,7 @@ public class UserListImpl implements UserList {
     }
 
     public User addUser(User user) {
+
         logger.info("addUser " + user);
         int i = 0;
         for(User u : this.users) {
@@ -34,23 +35,45 @@ public class UserListImpl implements UserList {
             }
         }
         if(i == 0){
+            Session session = null;
+            try {
+                 session = FactorySession.openSession();
+                 session.save(user);
+
+            } catch (Exception e){
+                  e.printStackTrace();
+            }
             this.users.add(user);
             logger.info("new user added");
+
             return user;
         }
         else
             return null;
     }
-    public User addUser(String userName, String password, String email) {return this.addUser(new User(userName, password, email));}
+    public User addUser(String userName, String password, String email) {
+        return this.addUser(new User(userName, password, email));
+    }
     public User getUser(String userName) {
         logger.info("getUser(" + userName + ")");
+        Session session = null;
 
-        for(User user : this.users) {
+        try {
+            session = FactorySession.openSession();
+            User user = (User) session.get(User.class, "userName", userName);
+            logger.info("getUser(" + userName + "): " + user);
+            return user;
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        /*for(User user : this.users) {
             if(user.getUserName().equals(userName)) {
                 logger.info("getUser(" + userName + "): " + user);
                 return user;
             }
-        }
+        }*/
         logger.info("not found " + userName);
         return null;
     }
@@ -87,12 +110,26 @@ public class UserListImpl implements UserList {
     @Override
     public boolean authenticateUser(String userName, String password) {
         boolean ans = false;
-        for(User u : this.users) {
+        Session session = null;
+
+        try {
+            session = FactorySession.openSession();
+            User user = (User) session.get(User.class, "userName", userName);
+            if(user.getPassword().equals(password)) {
+                ans = true;
+            }
+            logger.info("getUser(" + userName + "): " + user);
+            return ans;
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        /*for(User u : this.users) {
             if(u.getUserName().equals(userName) && u.getPassword().equals(password)) {
                 ans = true;
                 break;
             }
-        }
+        }*/
         return ans;
     }
 }

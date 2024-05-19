@@ -1,5 +1,5 @@
 package edu.upc.dsa.models;
-import edu.upc.dsa.utils.RandomUtils;
+import edu.upc.dsa.util.RandomUtils;
 
 public class User {
     private String idUser;
