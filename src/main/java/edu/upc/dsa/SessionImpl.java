@@ -1,8 +1,8 @@
-package edu.upc.eetac.dsa.db.orm;
+package edu.upc.dsa;
 
-import edu.upc.eetac.dsa.db.orm.model.User;
-import edu.upc.eetac.dsa.db.orm.util.ObjectHelper;
-import edu.upc.eetac.dsa.db.orm.util.QueryHelper;
+import edu.upc.dsa.models.User;
+import edu.upc.dsa.util.ObjectHelper;
+import edu.upc.dsa.util.QueryHelper;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -19,7 +19,13 @@ public class SessionImpl implements Session {
 
     public void save(Object entity) {
 
-
+        if(entity.getClass() == User.class){
+            User u = new User();
+            u.setUserName(((User) entity).getUserName());
+            u.setPassword(((User) entity).getPassword());
+            u.setEmail(((User) entity).getEmail());
+            entity = u;
+        }
         // INSERT INTO Partida () ()
         String insertQuery = QueryHelper.createQueryINSERT(entity);
         // INSERT INTO User (ID, lastName, firstName, address, city) VALUES (0, ?, ?, ?,?)

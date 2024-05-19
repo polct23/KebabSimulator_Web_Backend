@@ -1,8 +1,4 @@
-package edu.upc.eetac.dsa.db.orm.util;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+package edu.upc.dsa.util;
 
 public class QueryHelper {
 
@@ -12,7 +8,7 @@ public class QueryHelper {
         sb.append(entity.getClass().getSimpleName()).append(" ");
         sb.append("(");
 
-        String [] fields = edu.upc.eetac.dsa.db.orm.util.ObjectHelper.getFields(entity);
+        String [] fields = edu.upc.dsa.util.ObjectHelper.getFields(entity);
 
         sb.append("idUser");
         for (String field: fields) {

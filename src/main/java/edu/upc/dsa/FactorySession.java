@@ -1,15 +1,14 @@
-package edu.upc.eetac.dsa.db.orm;
+package edu.upc.dsa;
 
-
-import edu.upc.eetac.dsa.db.DBUtils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+
 public class FactorySession {
 
-    public static Session openSession() {
+    public static Session openSession() throws SQLException {
         Connection conn = getConnection();
         Session session = new SessionImpl(conn);
         return session;
@@ -17,7 +16,7 @@ public class FactorySession {
 
 
 
-    public static Connection getConnection()  {
+    public static Connection getConnection()  throws SQLException {
         String db = DBUtils.getDb();
         String host = DBUtils.getDbHost();
         String port = DBUtils.getDbPort();

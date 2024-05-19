@@ -1,6 +1,6 @@
-package edu.upc.eetac.dsa.db;
+package edu.upc.dsa;
 
-import java.sql.*; // JDBC
+import java.sql.*;
 
 public class DBJDBC {
 
@@ -36,13 +36,13 @@ public class DBJDBC {
     private static String getType (int type) {
         String ret = null;
         switch (type) {
-            case java.sql.Types.VARCHAR:
+            case Types.VARCHAR:
                 ret ="VARCHAR";
                 break;
-            case java.sql.Types.INTEGER:
+            case Types.INTEGER:
                 ret = "INTEGER";
                 break;
-            case java.sql.Types.DATE:
+            case Types.DATE:
                 ret = "DATE";
                 break;
 

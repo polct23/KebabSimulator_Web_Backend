@@ -1,13 +1,13 @@
-package edu.upc.eetac.dsa.db;
+package edu.upc.dsa;
 
-import edu.upc.eetac.dsa.db.orm.Session;
-import edu.upc.eetac.dsa.db.orm.SessionImpl;
-import edu.upc.eetac.dsa.db.orm.model.User;
+import edu.upc.dsa.models.User;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
-import static edu.upc.eetac.dsa.db.DBUtils.getConnection;
+import static edu.upc.dsa.DBUtils.getConnection;
 
 public class DBJDBC2 extends DBJDBC{
 
@@ -45,12 +45,11 @@ public class DBJDBC2 extends DBJDBC{
         // ORM (Object Relation Mapping) --> DAO (Data Access Object)
 
 
-        User u = new User("111","Bruno", "1234");
+        User u = new User("Lucas","1234","lucas@gmail.com" );
         Connection conn = getConnection();
         Session s = new SessionImpl(conn);
-        s.save(u);
-
-        User u2 = (User) s.get(User.class, "idUser", "12f");
+        //Session s = FactorySession.openSession();
+        User u2 = (User) s.get(User.class, "idUser", "2222");
         System.out.println(u2.getUserName());
 
         List<User> lu = s.findAll(User.class);

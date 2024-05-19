@@ -1,12 +1,9 @@
-package edu.upc.eetac.dsa.db.orm.util;
+package edu.upc.dsa.util;
 
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class ObjectHelper {
     public static String[] getFields(Object entity) {
