@@ -1,5 +1,5 @@
 async function handleLogin(username, password) {
-    const url = 'http://localhost:8080/dsaApp/users/login';
+    const url = '/dsaApp/users/login';
     const data = {
         userName: username,
         password: password

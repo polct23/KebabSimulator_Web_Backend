@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function fetchWeapons() {
-    fetch('http://localhost:8080/dsaApp/weapons/getWeapons', {
+    fetch('/dsaApp/weapons/getWeapons', {
         headers: {
             'Cache-Control': 'no-cache', // Indica al navegador no almacenar la respuesta en caché
             'Pragma': 'no-cache' // Compatibilidad con HTTP/1.0
