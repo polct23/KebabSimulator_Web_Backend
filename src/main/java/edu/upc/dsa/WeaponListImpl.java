@@ -52,6 +52,10 @@ public class WeaponListImpl implements WeaponList{
             this.weapons = session.findAll(Weapon.class);
         } catch (Exception e){
             e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
         return this.weapons;
     }

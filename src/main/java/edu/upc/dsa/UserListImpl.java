@@ -37,11 +37,15 @@ public class UserListImpl implements UserList {
         if(i == 0){
             Session session = null;
             try {
-                 session = FactorySession.openSession();
-                 session.save(user);
+                session = FactorySession.openSession();
+                session.save(user);
 
             } catch (Exception e){
-                  e.printStackTrace();
+                e.printStackTrace();
+            } finally {
+                if (session != null) {
+                    session.close();
+                }
             }
             this.users.add(user);
             logger.info("new user added");
@@ -51,9 +55,7 @@ public class UserListImpl implements UserList {
         else
             return null;
     }
-    public User addUser(String userName, String password, String email) {
-        return this.addUser(new User(userName, password, email));
-    }
+
     public User getUser(String userName) {
         logger.info("getUser(" + userName + ")");
         Session session = null;
@@ -66,16 +68,18 @@ public class UserListImpl implements UserList {
 
         } catch (Exception e){
             e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
 
-        /*for(User user : this.users) {
-            if(user.getUserName().equals(userName)) {
-                logger.info("getUser(" + userName + "): " + user);
-                return user;
-            }
-        }*/
         logger.info("not found " + userName);
         return null;
+    }
+
+    public User addUser(String userName, String password, String email) {
+        return this.addUser(new User(userName, password, email));
     }
     public List<User> getUsers() {return this.users;}
 
