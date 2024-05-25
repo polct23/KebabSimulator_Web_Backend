@@ -1,23 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const userStatus = localStorage.getItem('userStatus');
-    if (userStatus !== 'loggedIn') {
-        showMessage('You must be logged in to access this page.', 'Error');
-        setTimeout(() => {
-            window.location.href = '/';
-        }, 2000);
-        return;
-    }
-
-    // Verifica si hay un inicio de sesión automático
-    const autoLogin = localStorage.getItem('autoLogin');
-    if (autoLogin === 'true') {
-        // Muestra el mensaje de inicio de sesión automático
-        const message = document.getElementById('message');
-        message.style.display = 'block';
-        // Limpia el indicador de inicio de sesión automático
-        localStorage.removeItem('autoLogin');
-    }
-
     fetchWeapons(); // Siempre tratar de obtener la versión más reciente de las armas
 });
 
@@ -39,9 +20,10 @@ function fetchWeapons() {
         })
         .catch(error => {
             console.error('Fetch error:', error);
-            showMessage('Failed to load weapons from server. Please try again later.', 'Error');
+            alert('Failed to load weapons from server. Please try again later.');
         });
 }
+
 
 function displayWeapons(data) {
     const listElement = document.getElementById('weapons-list');
@@ -87,10 +69,4 @@ function createWeaponCard(weapon) {
 
     card.appendChild(cardBody);
     return card;
-}
-
-function showMessage(message, title) {
-    document.getElementById('messageModalLabel').textContent = title;
-    document.getElementById('messageModalBody').textContent = message;
-    $('#messageModal').modal('show');
 }
