@@ -10,13 +10,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Validación básica
         if (!email || !username || !password) {
-            alert('Email, username and password cannot be empty');
+            showMessage('Email, username, and password cannot be empty', 'Error');
             return;
         }
 
         // Verificar que las contraseñas coincidan
         if (password !== confirmPassword) {
-            alert('Passwords do not match');
+            showMessage('Passwords do not match', 'Error');
             return;
         }
 
@@ -40,12 +40,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 return response.json();
             })
             .then(responseData => {
-                alert('User registered successfully!');
-                window.location.href = 'index.html'; // Redirect after successful registration
+                showMessage('User registered successfully!', 'Success');
+                setTimeout(() => {
+                    window.location.href = 'index.html'; // Redirect after successful registration
+                }, 2000);
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Error: ' + error.message);
+                showMessage('Error: ' + error.message, 'Error');
             });
     });
 });
+
+function showMessage(message, title) {
+    document.getElementById('messageModalLabel').textContent = title;
+    document.getElementById('messageModalBody').textContent = message;
+    $('#messageModal').modal('show');
+}

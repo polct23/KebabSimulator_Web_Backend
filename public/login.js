@@ -24,19 +24,20 @@ async function handleLogin(username, password) {
             localStorage.setItem('username', username);
             localStorage.setItem('password', password);
 
-            // Muestra una alerta y redirige solo si el usuario acepta
-            alert("Login successful! You will be redirected.");
-            setTimeout(() => {
+            // Mostrar modal de éxito
+            $('#successModal').modal('show');
+            document.getElementById('successModalButton').addEventListener('click', function() {
                 window.location.href = '/listaObjetos.html'; // Redirige a la página listaObjetos.html
-            }, 0);
+            });
         } else {
             // Si el mensaje no indica un inicio de sesión exitoso, lanza un error
             throw new Error(result.message || 'Unknown login error');
         }
     } catch (error) {
         console.error('Login Error:', error);
-        // Muestra un mensaje de error si la solicitud falla o si la respuesta no es exitosa
-        alert("Error: " + error.message);
+        // Mostrar modal de error
+        document.getElementById('errorModalMessage').textContent = "Error: " + error.message;
+        $('#errorModal').modal('show');
     }
 }
 
