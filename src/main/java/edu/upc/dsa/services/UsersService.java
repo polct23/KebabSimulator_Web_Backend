@@ -23,18 +23,10 @@ public class UsersService {
 
     public UsersService() {
         this.ul = UserListImpl.getInstance();
-        initializeAdminUser();
-    }
-    private void initializeAdminUser() {
-        if (ul.size() == 0) {
-            ul.addUser(new User("admin", "admin","admin@dsa.com"));
-            // Asegúrate de que "addUser" realmente añade el usuario a la lista
-            // y que la implementación del usuario maneja correctamente la adición.
-        }
     }
 
     @GET
-    @ApiOperation(value = "get all Users", notes = "---")//Que ponemos en notes?
+    @ApiOperation(value = "get all Users", notes = "---")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful", response = User.class, responseContainer = "List")
     })
