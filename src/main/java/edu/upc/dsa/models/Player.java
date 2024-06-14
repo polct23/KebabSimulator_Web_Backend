@@ -6,10 +6,10 @@ public class Player{
     private String idPlayer;
     private int meat;
     private int money;
-    private HashMap<String, Weapon> weaponHashMap;
+    private HashMap<String, Ability> abilityHashMap;
     //private HashMap<String, Mision> misionesHashMap;
     public Player() {
-        this.weaponHashMap = new HashMap<>();
+        this.abilityHashMap = new HashMap<>();
     }
     public Player(String idPlayer) {
         this.idPlayer = idPlayer;
@@ -41,12 +41,12 @@ public class Player{
         this.money = money;
     }
 
-    public HashMap<String, Weapon> getWeaponHashMap() {
-        return weaponHashMap;
+    public HashMap<String, Ability> getAbilityHashMap() {
+        return abilityHashMap;
     }
 
-    public void setWeaponHashMap(HashMap<String, Weapon> weaponHashMap) {
-        this.weaponHashMap = weaponHashMap;
+    public void setAbilityHashMap(HashMap<String, Ability> abilityHashMap) {
+        this.abilityHashMap = abilityHashMap;
     }
 
     public String toString(){return "Player [playerId="+idPlayer+", meat="+meat+", money="+money+"]";}

@@ -48,13 +48,13 @@ INSERT INTO `user` VALUES
 UNLOCK TABLES;
 
 --
--- Table structure for table `weapon`
+-- Table structure for table `ability`
 --
 
-DROP TABLE IF EXISTS `weapon`;
+DROP TABLE IF EXISTS `ability`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `weapon` (
+CREATE TABLE `ability` (
   `idWeapon` varchar(50) DEFAULT NULL,
   `weaponName` varchar(50) DEFAULT NULL,
   `description` varchar(50) DEFAULT NULL,
@@ -64,14 +64,14 @@ CREATE TABLE `weapon` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `weapon`
+-- Dumping data for table `ability`
 --
 
-LOCK TABLES `weapon` WRITE;
-/*!40000 ALTER TABLE `weapon` DISABLE KEYS */;
-INSERT INTO `weapon` VALUES
+LOCK TABLES `ability` WRITE;
+/*!40000 ALTER TABLE `ability` DISABLE KEYS */;
+INSERT INTO `ability` VALUES
 ('12hhd','Cuchillo','afilado',3,2.5);
-/*!40000 ALTER TABLE `weapon` ENABLE KEYS */;
+/*!40000 ALTER TABLE `ability` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

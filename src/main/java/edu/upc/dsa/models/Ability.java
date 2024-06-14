@@ -1,38 +1,38 @@
 package edu.upc.dsa.models;
 
-public class Weapon {
-    private String idWeapon;
-    private String weaponName;
+public class Ability {
+    private String idAbility;
+    private String abilityName;
     private String description;
     private int damage;
     private double price;
 
     //private int level - Por si queremos hacer nivelado de armas
 
-    public Weapon(){}
+    public Ability(){}
 
-    public Weapon(String idWeapon, String weaponName, String description, int damage, double price){
-        this.idWeapon = idWeapon;
-        this.weaponName = weaponName;
+    public Ability(String idAbility, String abilityName, String description, int damage, double price){
+        this.idAbility = idAbility;
+        this.abilityName = abilityName;
         this.description = description;
         this.damage = damage;
         this.price = price;
     }
 
-    public String getIdWeapon() {
-        return idWeapon;
+    public String getIdAbility() {
+        return idAbility;
     }
 
-    public void setIdWeapon(String idWeapon) {
-        this.idWeapon = idWeapon;
+    public void setIdAbility(String idAbility) {
+        this.idAbility = idAbility;
     }
 
-    public String getWeaponName() {
-        return weaponName;
+    public String getAbilityName() {
+        return abilityName;
     }
 
-    public void setWeaponName(String weaponName) {
-        this.weaponName = weaponName;
+    public void setAbilityName(String abilityName) {
+        this.abilityName = abilityName;
     }
 
     public String getDescription() {
@@ -61,6 +61,6 @@ public class Weapon {
 
     @Override
     public String toString() {
-        return "Weapon [idWeapon="+idWeapon+", weaponName=" + weaponName + ", description=" + description + ", damage=" + damage + ", price=" + price + "]";
+        return "Ability [idAbility="+ idAbility +", abilityName=" + abilityName + ", description=" + description + ", damage=" + damage + ", price=" + price + "]";
     }
 }
