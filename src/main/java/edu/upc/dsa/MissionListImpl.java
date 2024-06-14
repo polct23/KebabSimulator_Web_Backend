@@ -1,17 +1,17 @@
 package edu.upc.dsa;
 
-import edu.upc.dsa.models.Enemy;
+import edu.upc.dsa.models.Mission;
 import org.apache.log4j.Logger;
 
 import java.util.List;
 
-public class EnemyListImpl implements EnemyList {
-    private static EnemyListImpl instance;
-    final static Logger logger = Logger.getLogger(EnemyListImpl.class);
+public class MissionListImpl implements MissionList {
+    private static MissionListImpl instance;
+    final static Logger logger = Logger.getLogger(MissionListImpl.class);
 
-    private EnemyListImpl(){}
-    public static EnemyListImpl getInstance(){
-        if(instance == null) instance = new EnemyListImpl();
+    private MissionListImpl(){}
+    public static MissionListImpl getInstance(){
+        if(instance == null) instance = new MissionListImpl();
         return instance;
     }
 
@@ -20,7 +20,7 @@ public class EnemyListImpl implements EnemyList {
         int ret = 0;
         try {
             session = FactorySession.openSession();
-            ret = session.findAll(Enemy.class).size();
+            ret = session.findAll(Mission.class).size();
             logger.info("size " + ret);
         } catch (Exception e){
             e.printStackTrace();
@@ -32,12 +32,12 @@ public class EnemyListImpl implements EnemyList {
         return ret;
     }
 
-    public Enemy addEnemy(Enemy enemy) {
+    public Mission addMission(Mission mission) {
         Session session = null;
         try {
             session = FactorySession.openSession();
-            session.save(enemy);
-            logger.info("new enemy added");
+            session.save(mission);
+            logger.info("new mission added");
         } catch (Exception e){
             e.printStackTrace();
         } finally {
@@ -45,16 +45,16 @@ public class EnemyListImpl implements EnemyList {
                 session.close();
             }
         }
-        return enemy;
+        return mission;
     }
 
-    public Enemy getEnemy(String idEnemy) {
+    public Mission getMission(String idMission) {
         Session session = null;
-        Enemy enemy = null;
+        Mission mission = null;
         try {
             session = FactorySession.openSession();
-            enemy = (Enemy) session.get(Enemy.class, "idEnemy", idEnemy);
-            logger.info("getEnemy(" + idEnemy + "): " + enemy);
+            mission = (Mission) session.get(Mission.class, "idMission", idMission);
+            logger.info("getMission(" + idMission + "): " + mission);
         } catch (Exception e){
             e.printStackTrace();
         } finally {
@@ -62,15 +62,15 @@ public class EnemyListImpl implements EnemyList {
                 session.close();
             }
         }
-        return enemy;
+        return mission;
     }
 
-    public List<Enemy> getEnemies() {
+    public List<Mission> getMissions() {
         Session session = null;
-        List<Enemy> enemies = null;
+        List<Mission> missions = null;
         try {
             session = FactorySession.openSession();
-            enemies = session.findAll(Enemy.class);
+            missions = session.findAll(Mission.class);
         } catch (Exception e){
             e.printStackTrace();
         } finally {
@@ -78,19 +78,19 @@ public class EnemyListImpl implements EnemyList {
                 session.close();
             }
         }
-        return enemies;
+        return missions;
     }
 
-    public void deleteEnemy(String idEnemy) {
+    public void deleteMission(String idMission) {
         Session session = null;
         try {
             session = FactorySession.openSession();
-            Enemy enemy = (Enemy) session.get(Enemy.class, "idEnemy", idEnemy);
-            if(enemy != null) {
-                session.delete(enemy, "idEnemy");
-                logger.info(enemy + " deleted ");
+            Mission mission = (Mission) session.get(Mission.class, "idMission", idMission);
+            if(mission != null) {
+                session.delete(mission, "idMission");
+                logger.info(mission + " deleted ");
             } else {
-                logger.warn("not found " + idEnemy);
+                logger.warn("not found " + idMission);
             }
         } catch (Exception e){
             e.printStackTrace();

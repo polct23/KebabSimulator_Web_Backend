@@ -46,9 +46,8 @@ public class AbilitiesService {
     })
     @Path("/newAbility")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response newWeapon(Ability ability) {
-        Ability newAbility = new Ability(ability.getAbilityName(), ability.getDescription(),
-                ability.getValue(), ability.getPrice());
+    public Response newAbility(Ability ability) {
+        Ability newAbility = new Ability(ability.getAbilityName(), ability.getDescription(), ability.getValue(), ability.getPrice());
         if(newAbility.getIdAbility()==null || newAbility.getAbilityName()==null) return Response.status(500).entity(newAbility).build();
         this.wl.addAbility(newAbility);
         return Response.status(201).entity(newAbility).build();
@@ -61,7 +60,7 @@ public class AbilitiesService {
             @ApiResponse(code = 404, message = "Ability not found"),
     })
     @Path("/{id}")
-    public Response deleteUser(@PathParam("id") String id) {
+    public Response deleteAbility(@PathParam("id") String id) {
         this.wl.deleteAbility(id);
         return Response.status(200).build();
     }

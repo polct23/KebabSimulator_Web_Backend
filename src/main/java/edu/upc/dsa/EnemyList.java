@@ -4,11 +4,10 @@ import edu.upc.dsa.models.Enemy;
 import java.util.List;
 
 public interface EnemyList {
-    Enemy addEnemy(String enemyName, int meat, int speed, String description);
-    Enemy addEnemy(Enemy ability);
-    Enemy getEnemy(String idWeapon);
+    Enemy addEnemy(Enemy enemy);
+    Enemy getEnemy(String idEnemy);
     List<Enemy> getEnemies();
-    void deleteEnemy(String idWeapon);
+    void deleteEnemy(String idEnemy);
 
     int size();
 }
