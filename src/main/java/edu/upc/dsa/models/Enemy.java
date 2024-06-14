@@ -3,23 +3,23 @@ package edu.upc.dsa.models;
 import edu.upc.dsa.util.RandomUtils;
 
 public class Enemy {
-    private String enemyId;
+    private String idEnemy;
     private String name;
     private int meat;
     private int speed;
 
     public Enemy() {
-        this.enemyId = RandomUtils.getId();
+        this.idEnemy = RandomUtils.getId();
     }
 
     private String description;
 
-    public String getEnemyId() {
-        return enemyId;
+    public String getIdEnemy() {
+        return idEnemy;
     }
 
-    public void setEnemyId(String enemyId) {
-        this.enemyId = enemyId;
+    public void setIdEnemy(String idEnemy) {
+        this.idEnemy = idEnemy;
     }
 
     public String getName() {
@@ -55,7 +55,7 @@ public class Enemy {
     }
 
     public Enemy(String name, int meat, int speed, String description) {
-        this.enemyId = RandomUtils.getId();
+        this.idEnemy = RandomUtils.getId();
         this.name = name;
         this.meat = meat;
         this.speed = speed;

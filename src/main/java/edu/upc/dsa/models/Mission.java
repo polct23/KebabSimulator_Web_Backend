@@ -3,16 +3,16 @@ package edu.upc.dsa.models;
 import edu.upc.dsa.util.RandomUtils;
 
 public class Mission {
-    private String missionId;
+    private String idMission;
     private int reward;
     private String description;
 
-    public String getMissionId() {
-        return missionId;
+    public String getIdMission() {
+        return idMission;
     }
 
-    public void setMissionId(String missionId) {
-        this.missionId = missionId;
+    public void setIdMission(String idMission) {
+        this.idMission = idMission;
     }
 
     public int getReward() {
@@ -32,11 +32,11 @@ public class Mission {
     }
 
     public Mission() {
-        this.missionId = RandomUtils.getId();
+        this.idMission = RandomUtils.getId();
     }
 
     public Mission(int reward, String description) {
-        this.missionId = RandomUtils.getId();
+        this.idMission = RandomUtils.getId();
         this.reward = reward;
         this.description = description;
     }

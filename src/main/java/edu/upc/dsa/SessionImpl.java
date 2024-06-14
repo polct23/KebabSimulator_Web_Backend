@@ -115,12 +115,12 @@ public class SessionImpl implements Session {
 
     }
 
-    public void delete(Object entity) {
-        String deleteQuery = QueryHelper.createQueryDELETE(entity.getClass(), "id");
+    public void delete(Object entity, String columna) {
+        String deleteQuery = QueryHelper.createQueryDELETE(entity.getClass(), columna);
         PreparedStatement pstm = null;
         try {
             pstm = conn.prepareStatement(deleteQuery);
-            pstm.setObject(1, ObjectHelper.getter(entity, "id"));
+            pstm.setObject(1, ObjectHelper.getter(entity, columna));
             pstm.executeQuery();
         } catch (SQLException | NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();

@@ -38,7 +38,7 @@ public class EnemyListImpl implements EnemyList {
     public Enemy getEnemy(String idEnemy) {
         logger.info("getEnemy(" + idEnemy + ")");
         for(Enemy e : this.enemies) {
-            if(e.getEnemyId().equals(idEnemy)) {
+            if(e.getIdEnemy().equals(idEnemy)) {
                 logger.info("getEnemy(" + idEnemy + "): " + e);
                 return e;
             }

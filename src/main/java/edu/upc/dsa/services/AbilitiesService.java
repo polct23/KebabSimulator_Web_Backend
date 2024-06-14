@@ -47,10 +47,22 @@ public class AbilitiesService {
     @Path("/newAbility")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response newWeapon(Ability ability) {
-        Ability newAbility = new Ability(ability.getIdAbility(), ability.getAbilityName(), ability.getDescription(),
-                ability.getDamage(), ability.getPrice());
+        Ability newAbility = new Ability(ability.getAbilityName(), ability.getDescription(),
+                ability.getValue(), ability.getPrice());
         if(newAbility.getIdAbility()==null || newAbility.getAbilityName()==null) return Response.status(500).entity(newAbility).build();
         this.wl.addAbility(newAbility);
         return Response.status(201).entity(newAbility).build();
+    }
+
+    @DELETE
+    @ApiOperation(value = "Delete Ability", notes = "Deletes a ablity from list.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 404, message = "Ability not found"),
+    })
+    @Path("/{id}")
+    public Response deleteUser(@PathParam("id") String id) {
+        this.wl.deleteAbility(id);
+        return Response.status(200).build();
     }
 }

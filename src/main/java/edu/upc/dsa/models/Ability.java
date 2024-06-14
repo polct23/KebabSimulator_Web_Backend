@@ -1,21 +1,23 @@
 package edu.upc.dsa.models;
 
+import edu.upc.dsa.util.RandomUtils;
+
 public class Ability {
     private String idAbility;
     private String abilityName;
     private String description;
-    private int damage;
+    private int value;
     private double price;
 
     //private int level - Por si queremos hacer nivelado de armas
 
     public Ability(){}
 
-    public Ability(String idAbility, String abilityName, String description, int damage, double price){
-        this.idAbility = idAbility;
+    public Ability(String abilityName, String description, int value, double price){
+        this.idAbility = RandomUtils.getId();
         this.abilityName = abilityName;
         this.description = description;
-        this.damage = damage;
+        this.value = value;
         this.price = price;
     }
 
@@ -43,12 +45,12 @@ public class Ability {
         this.description = description;
     }
 
-    public int getDamage() {
-        return damage;
+    public int getValue() {
+        return value;
     }
 
-    public void setDamage(int damage) {
-        this.damage = damage;
+    public void setValue(int value) {
+        this.value = value;
     }
 
     public double getPrice() {
@@ -61,6 +63,6 @@ public class Ability {
 
     @Override
     public String toString() {
-        return "Ability [idAbility="+ idAbility +", abilityName=" + abilityName + ", description=" + description + ", damage=" + damage + ", price=" + price + "]";
+        return "Ability [idAbility="+ idAbility +", abilityName=" + abilityName + ", description=" + description + ", value=" + value + ", price=" + price + "]";
     }
 }
