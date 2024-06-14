@@ -49,5 +49,8 @@ public class Player{
         this.weaponHashMap = weaponHashMap;
     }
 
+    public void buyWeapon(Weapon weapon){
+        this.weaponHashMap.put(weapon.getIdWeapon(), weapon);
+    }
     public String toString(){return "Player [playerId="+idPlayer+", meat="+meat+", money="+money+"]";}
 }

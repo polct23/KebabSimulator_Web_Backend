@@ -5,6 +5,7 @@ import edu.upc.dsa.models.Player;
 import edu.upc.dsa.PlayerList;
 import edu.upc.dsa.PlayerListImpl;
 
+import edu.upc.dsa.models.Weapon;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -65,6 +66,21 @@ public class PlayersService {
         if(pl == null) return Response.status(409).build();
         else return Response.status(201).entity(newPlayer).build();
     }
+   /* @POST
+    @ApiOperation(value = "buy a Weapon", notes = "adds a weapon to the hashmap of the player")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 404, message = "User not found")
+    })
+    @Path("/buy/{name}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response buyWeapon(Weapon weapon, @PathParam("name") String namePlayer) {
+        List<Player> players = pl.getPlayers();
+        for(Player player : players) {
+            if(player.getName)
+        }
+
+    }*/
     @DELETE
     @ApiOperation(value = "Delete Player", notes = "Deletes a player from list.")
     @ApiResponses(value = {
