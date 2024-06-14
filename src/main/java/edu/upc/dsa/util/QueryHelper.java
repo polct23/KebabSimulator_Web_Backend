@@ -47,4 +47,12 @@ public class QueryHelper {
 
         return sb.toString();
     }
+
+    public static String createQueryDELETE(Class theClass, String columna) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("DELETE FROM ").append(theClass.getSimpleName());
+        sb.append(" WHERE " + columna + " = ?");
+
+        return sb.toString();
+    }
 }

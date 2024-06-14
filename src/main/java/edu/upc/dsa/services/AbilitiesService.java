@@ -33,7 +33,7 @@ public class AbilitiesService {
     @Path("/getAbilities")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAbilities() {
-        List<Ability> abilities = wl.getWeapons();
+        List<Ability> abilities = wl.getAbilities();
         GenericEntity<List<Ability>> entity = new GenericEntity<List<Ability>>(abilities) {};
         return Response.status(200).entity(entity).build();
     }
@@ -50,7 +50,7 @@ public class AbilitiesService {
         Ability newAbility = new Ability(ability.getIdAbility(), ability.getAbilityName(), ability.getDescription(),
                 ability.getDamage(), ability.getPrice());
         if(newAbility.getIdAbility()==null || newAbility.getAbilityName()==null) return Response.status(500).entity(newAbility).build();
-        this.wl.addWeapon(newAbility);
+        this.wl.addAbility(newAbility);
         return Response.status(201).entity(newAbility).build();
     }
 }

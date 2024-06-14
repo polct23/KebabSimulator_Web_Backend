@@ -21,31 +21,31 @@ public class AbilitiesListImpl implements AbilitiesList {
         logger.info("size " + ret);
         return ret;
     }
-    public Ability addWeapon(Ability ability) {
-        logger.info("addWeapon " + ability);
+    public Ability addAbility(Ability ability) {
+        logger.info("addAbility " + ability);
         this.abilities.add(ability);
-        logger.info("new weapon added");
+        logger.info("new ability added");
         return ability;
     }
-    public Ability addWeapon(String idWeapon, String weaponName, String description, int damage, double price) {
-        Ability ability = new Ability(idWeapon, weaponName, description, damage, price);
-        logger.info("addWeapon " + ability);
+    public Ability addAbility(String abilityName, String description, int damage, double price) {
+        Ability ability = new Ability(abilityName, description, damage, price);
+        logger.info("addAbility " + ability);
         this.abilities.add(ability);
-        logger.info("new weapon added");
+        logger.info("new ability added");
         return ability;
     }
-    public Ability getWeapon(String idWeapon) {
-        logger.info("getWeapon(" + idWeapon + ")");
+    public Ability getAbility(String idAbility) {
+        logger.info("getAbility(" + idAbility + ")");
         for(Ability w : this.abilities) {
-            if(w.getIdAbility().equals(idWeapon)) {
-                logger.info("getUser(" + idWeapon + "): " + w);
+            if(w.getIdAbility().equals(idAbility)) {
+                logger.info("getUser(" + idAbility + "): " + w);
                 return w;
             }
         }
-        logger.info("not found " + idWeapon);
+        logger.info("not found " + idAbility);
         return null;
     }
-    public List<Ability> getWeapons() {
+    public List<Ability> getAbilities() {
         Session session = null;
         try {
             session = FactorySession.openSession();
@@ -60,16 +60,14 @@ public class AbilitiesListImpl implements AbilitiesList {
         return this.abilities;
     }
 
-    @Override
-    public void deleteWeapon(String idWeapon) {
-        Ability w = this.getWeapon(idWeapon);
-        if(w != null) {
-            logger.warn("not found " +w);
+    public void deleteAbility(String idAbility) {
+        Ability w = this.getAbility(idAbility);
+        if(w == null) {
+            logger.warn("not found " + idAbility);
         }
         else {
-            logger.info(w + "deleted ");
+            logger.info(w + " deleted ");
             this.abilities.remove(w);
         }
-
     }
 }
