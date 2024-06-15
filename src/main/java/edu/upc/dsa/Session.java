@@ -10,9 +10,11 @@ public interface Session<E> {
     void close();
     Object get(Class theClass, String column, Object ID) throws SQLException, NoSuchFieldException, IllegalAccessException, InstantiationException;                                 // cRud
 
-    public void updateJugador(String columna, String user, String value) throws SQLIntegrityConstraintViolationException;// crUd
+    public void updateJugador(String columna, String user, Object value) throws SQLIntegrityConstraintViolationException;// crUd
     void delete(Object object, String columna);                                         // cruD
     List<Object> findAll(Class theClass);                               // cR
+
+    Object getPlayersAbilities(Class theClass, String column, Object entity) throws SQLException, NoSuchFieldException, IllegalAccessException, InstantiationException;
 
     List<Object> query(String query, Class theClass, HashMap params);
 }

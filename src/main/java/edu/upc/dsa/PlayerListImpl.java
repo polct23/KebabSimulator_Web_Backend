@@ -1,11 +1,14 @@
 package edu.upc.dsa;
 
+import edu.upc.dsa.ExceptionMapper.UserNotFoundException;
 import edu.upc.dsa.ExceptionMapper.WrongCredentialsException;
+import edu.upc.dsa.models.Ability;
 import edu.upc.dsa.models.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.upc.dsa.models.PlayersAbility;
 import org.apache.log4j.Logger;
 
 public class PlayerListImpl implements PlayerList {
@@ -23,6 +26,61 @@ public class PlayerListImpl implements PlayerList {
         logger.info("size " + ret);
         return ret;
     }
+
+    @Override
+    public void buyAbilites(String userName, String abilityName) throws UserNotFoundException{
+        Session session = null;
+        Player player;
+        try {
+            session = FactorySession.openSession();
+            player = (Player) session.get(Player.class, "userName", userName);
+            if(player != null) {
+                Ability ab = (Ability) session.get(Ability.class, "abilityName", abilityName);
+                PlayersAbility pa = new PlayersAbility(player.getIdPlayer(), ab.getIdAbility());
+                session.save(pa);
+                logger.info(userName + " new ability bought correctly.");
+            } else {
+                logger.warn("not found " + userName);
+                throw new UserNotFoundException();
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    @Override
+    public List<Ability> getPlayersAbility(String userName) throws UserNotFoundException {
+        /* Session session = null;
+        Player player;
+        try {
+            session = FactorySession.openSession();
+            player = (Player) session.get(Player.class, "userName", userName);
+            if(player != null) {
+                Ability ab = (Ability) session.get(Ability.class, "abilityName", abilityName);
+                PlayersAbility pa = new PlayersAbility(player.getIdPlayer(), ab.getIdAbility());
+                session.save(pa);
+                logger.info(userName + " new ability bought correctly.");
+            } else {
+                logger.warn("not found " + userName);
+                throw new UserNotFoundException();
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+
+         */
+        return null;
+    }
+
+
     public Player addPlayer(Player player) {
 
         logger.info("addUser " + player);
@@ -114,8 +172,31 @@ public class PlayerListImpl implements PlayerList {
     }
 
     @Override
-    public void updateStatements(int lastMission, int money, int currentLevel) {
+    public void updateStatements(String userName, int currentMission, int money, int currentLevel) throws UserNotFoundException{
+        Session session = null;
+        Player player;
+        try {
+            session = FactorySession.openSession();
+            player = (Player) session.get(Player.class, "userName", userName);
+            if(player != null) {
+                session.updateJugador("currentMission", userName , currentMission);
+                logger.info("current mission updated correctly");
+                session.updateJugador("currentLevel", userName , currentLevel);
+                logger.info("current level updated correctly");
+                session.updateJugador("money", userName , money);
+                logger.info("Money updated correctly");
+            } else {
+                logger.warn("not found " + userName);
+                throw new UserNotFoundException();
 
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
     }
 
     public boolean authenticateUser(String userName, String password) throws WrongCredentialsException {

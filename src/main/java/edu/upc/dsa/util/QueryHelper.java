@@ -72,11 +72,29 @@ public class QueryHelper {
         return sb.toString();
     }
 
-    public static String createQueryUPDATEPlayer(String columna, String user, String value) {
+    public static String createQueryUPDATEPlayer(String columna) {
         StringBuffer sb = new StringBuffer();
         sb.append("UPDATE Player ");
         sb.append("SET " + columna + " = ?");
         sb.append(" WHERE USERNAME = ?");
+
+        return sb.toString();
+    }
+    public static String createQueryUPDATEPlayersAblity(String columna) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("UPDATE PlayersAbilities ");
+        sb.append("SET " + columna + " = ?");
+        sb.append(" WHERE USERNAME = ?");
+
+        return sb.toString();
+    }
+
+    public String createQueryPlayerAbilities() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT p.userName, a.abilityName ")
+                .append("FROM player p ")
+                .append("JOIN player_ability pa ON p.idPlayer = ? ")
+                .append("JOIN ability a ON pa.idAbility = ?");
 
         return sb.toString();
     }

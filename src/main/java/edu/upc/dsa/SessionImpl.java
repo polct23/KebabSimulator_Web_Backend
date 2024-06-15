@@ -85,8 +85,8 @@ public class SessionImpl implements Session {
         return o;
     }
 
-    public void updateJugador(String columna, String user, String value) throws SQLIntegrityConstraintViolationException {
-        String updateQuery = QueryHelper.createQueryUPDATEPlayer(columna, user, value);
+    public void updateJugador(String columna, String user, Object value) throws SQLIntegrityConstraintViolationException {
+        String updateQuery = QueryHelper.createQueryUPDATEPlayer(columna);
 
         PreparedStatement pstm = null;
         try {
@@ -147,6 +147,36 @@ public class SessionImpl implements Session {
         return list;
     }
 
+    @Override
+    public Object getPlayersAbilities(Class theClass, String column, Object entity) throws SQLException, NoSuchFieldException, IllegalAccessException, InstantiationException {
+       /* String selectQuery = QueryHelper.createQueryUPDATEPlayersAblity(column);
+        PreparedStatement pstm = null;
+        pstm = conn.prepareStatement(selectQuery);
+        pstm.setObject(1, entity);
+        ResultSet rs = pstm.executeQuery();
+
+        Object o = theClass.newInstance();
+
+        if (!rs.next()) {
+            // No records found
+            o = null;
+        } else{
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int numberOfColumns = rsmd.getColumnCount();
+
+            do {
+                for (int i = 1; i <= numberOfColumns; i++) {
+                    String columnName = rsmd.getColumnName(i);
+                    ObjectHelper.setter(o, columnName, rs.getObject(i));
+                }
+            } while (rs.next());
+        }
+
+        return o;
+
+        */
+        return null;
+    }
 
 
     public List<Object> query(String query, Class theClass, HashMap params) {
