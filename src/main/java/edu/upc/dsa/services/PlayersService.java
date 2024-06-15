@@ -1,11 +1,12 @@
 package edu.upc.dsa.services;
 
+import edu.upc.dsa.ExceptionMapper.WrongCredentialsException;
 import edu.upc.dsa.models.User;
 import edu.upc.dsa.models.Player;
 import edu.upc.dsa.PlayerList;
 import edu.upc.dsa.PlayerListImpl;
 
-import edu.upc.dsa.models.Weapon;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -59,28 +60,14 @@ public class PlayersService {
     })
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response newPlayer(User user) {
-        Player newPlayer = new Player(user.getIdUser());
+    public Response newPlayer(Player player) {
+        Player newPlayer = new Player(player.getUserName(), player.getPassword(), player.getEmail());
         if(newPlayer.getIdPlayer() == null) return Response.status(500).build();
         Player pl = this.pl.addPlayer(newPlayer);
         if(pl == null) return Response.status(409).build();
         else return Response.status(201).entity(newPlayer).build();
     }
-   /* @POST
-    @ApiOperation(value = "buy a Weapon", notes = "adds a weapon to the hashmap of the player")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
-            @ApiResponse(code = 404, message = "User not found")
-    })
-    @Path("/buy/{name}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response buyWeapon(Weapon weapon, @PathParam("name") String namePlayer) {
-        List<Player> players = pl.getPlayers();
-        for(Player player : players) {
-            if(player.getName)
-        }
 
-    }*/
     @DELETE
     @ApiOperation(value = "Delete Player", notes = "Deletes a player from list.")
     @ApiResponses(value = {
@@ -93,6 +80,36 @@ public class PlayersService {
         else{
             this.pl.deletePlayer(idPlayer);
             return Response.status(200).build();
+        }
+    }
+
+    @PUT
+    @ApiOperation(value = "update Player's Password", notes = "---")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 404, message = "Player not found")
+    })
+    @Path("/updateUserPassword")
+    public Response updateUserPassword(Player player) {
+        Player p = this.pl.updatePassword(player,player.getPassword());
+        if(p==null) return Response.status(404).build();
+        return Response.status(201).build();
+    }
+
+    @POST
+    @ApiOperation(value = "Player Login", notes = "Verifies user credentials.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Login Successful"),
+            @ApiResponse(code = 401, message = "Unauthorized")
+    })
+    @Path("/login")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response loginUser(Player player) throws WrongCredentialsException {
+        if (pl.authenticateUser(player.getUserName(), player.getPassword())) {
+            return Response.status(Response.Status.OK).entity("{\"message\":\"Login Successful\"}").build();
+        } else {
+            return Response.status(Response.Status.UNAUTHORIZED).entity("{\"message\":\"Unauthorized - Incorrect username or password\"}").build();
         }
     }
 }

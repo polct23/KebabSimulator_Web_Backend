@@ -1,28 +1,28 @@
 package edu.upc.dsa.models;
 
+import edu.upc.dsa.util.RandomUtils;
+
 import java.util.HashMap;
 
 public class Player{
     private String idPlayer;
-    private int meat;
-    private int money;
-    private HashMap<String, Ability> abilityHashMap;
+    private String userName;
+    private String password;
+    private String email;
+    private int currentLevel;
+    private int currentMission;
+    private double money;
     //private HashMap<String, Mision> misionesHashMap;
-    public Player() {
-        this.abilityHashMap = new HashMap<>();
-    }
-    public Player(String idPlayer) {
-        this.idPlayer = idPlayer;
-        this.meat = 0;
-        this.money = 0;
-    }
 
-    public int getMeat() {
-        return meat;
-    }
 
-    public void setMeat(int meat) {
-        this.meat = meat;
+    public Player(String userName, String password, String email, int currentLevel, int currentMission, double money) {
+        this.idPlayer = RandomUtils.getId();
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.currentLevel = currentLevel;
+        this.currentMission = currentMission;
+        this.money = money;
     }
 
     public String getIdPlayer() {
@@ -33,24 +33,62 @@ public class Player{
         this.idPlayer = idPlayer;
     }
 
-    public int getMoney() {
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int getCurrentLevel() {
+        return currentLevel;
+    }
+
+    public void setCurrentLevel(int currentLevel) {
+        this.currentLevel = currentLevel;
+    }
+
+    public int getCurrentMission() {
+        return currentMission;
+    }
+
+    public void setCurrentMission(int currentMission) {
+        this.currentMission = currentMission;
+    }
+
+    public double getMoney() {
         return money;
     }
 
-    public void setMoney(int money) {
+    public void setMoney(double money) {
         this.money = money;
     }
 
-    public HashMap<String, Ability> getAbilityHashMap() {
-        return abilityHashMap;
+    public Player(String userName, String password, String email) {
+        this.idPlayer = RandomUtils.getId();
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
     }
 
-    public void setAbilityHashMap(HashMap<String, Ability> abilityHashMap) {
-        this.abilityHashMap = abilityHashMap;
+    public Player() {
+        this.idPlayer = RandomUtils.getId();
     }
-
-    public void buyWeapon(Weapon weapon){
-        this.weaponHashMap.put(weapon.getIdWeapon(), weapon);
-    }
-    public String toString(){return "Player [playerId="+idPlayer+", meat="+meat+", money="+money+"]";}
 }
