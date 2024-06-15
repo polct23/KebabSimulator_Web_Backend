@@ -113,20 +113,6 @@ public class PlayersService {
             return Response.status(Response.Status.UNAUTHORIZED).entity("{\"message\":\"Unauthorized - Incorrect username or password\"}").build();
         }
     }
-    @POST
-    @ApiOperation(value = "Buy Ability", notes = "Add a ability from the database to the player hashmap of abilities.")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Succesfull"),
-            @ApiResponse(code = 404, message = "Not found or already purchased")
-    })
-    @Path("/buy/{idAbility}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response buyAbility(@PathParam("idAbility") String idAbility, Player player) {
-        String userName = player.getUserName();
-        boolean result = pl.buyAbility(userName, idAbility);
-        if(result) return Response.status(200).build();
-        else return Response.status(404).build();
-    }
 
 
 }

@@ -13,7 +13,6 @@ public class Player{
     private int currentLevel;
     private int currentMission;
     private double money;
-    private HashMap<String, Ability> abilities;
 
 
 //private HashMap<String, Mision> misionesHashMap;
@@ -85,18 +84,11 @@ public class Player{
         this.money = money;
     }
 
-    public HashMap<String, Ability> getAbilities() {return abilities;}
-
-    public void setAbilities(HashMap<String, Ability> abilities) {this.abilities = abilities;}
-
     public Player(String userName, String password, String email) {
         this.idPlayer = RandomUtils.getId();
         this.userName = userName;
         this.password = password;
         this.email = email;
-    }
-    public void addAbility(Ability ability) {
-        this.abilities.put(ability.getIdAbility(), ability);
     }
 
     public Player() {
