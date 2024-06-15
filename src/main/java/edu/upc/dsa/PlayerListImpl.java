@@ -1,6 +1,7 @@
 package edu.upc.dsa;
 
 import edu.upc.dsa.ExceptionMapper.WrongCredentialsException;
+import edu.upc.dsa.models.Ability;
 import edu.upc.dsa.models.Player;
 
 import java.util.ArrayList;
@@ -164,5 +165,39 @@ public class PlayerListImpl implements PlayerList {
         }
         return null;
     }
+
+    @Override
+    public boolean buyAbility(String userName, String idAbility) {
+        boolean ans = false;
+        Session session = null;
+        try {
+            session = FactorySession.openSession();
+            Player player = (Player) session.get(Player.class, "userName", userName);
+            Ability ability = (Ability) session.get(Ability.class, "idAbility", idAbility);
+            if (player != null && ability != null) {
+                // Verificar si el jugador ya tiene la habilidad
+                if (!player.getAbilities().containsKey(idAbility)) {
+                    // Añadir la habilidad al jugador
+                    player.addAbility(ability);
+                    // Guardar los cambios en la base de datos
+                    session.updateJugador("ability", userName , idAbility );
+                    logger.info("Ability " + idAbility + " bought by player " + userName);
+                    ans = true;
+                } else {
+                    logger.info("Player " + userName + " already has ability " + idAbility);
+                }
+            } else {
+                logger.warn("Player or ability not found: " + userName + ", " + idAbility);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return ans;
+    }
+
 
 }

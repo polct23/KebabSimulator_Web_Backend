@@ -11,6 +11,7 @@ public interface PlayerList {
     public void deletePlayer(String idPlayer);
     public void updateStatements(int lastMission, int currentPoints, int money);
     boolean authenticateUser(String userName, String password) throws WrongCredentialsException;
+    public boolean buyAbility(String idPlayer, String idAbility);
 
     int size();
 

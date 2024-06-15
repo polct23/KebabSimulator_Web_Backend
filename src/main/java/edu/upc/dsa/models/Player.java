@@ -1,6 +1,7 @@
 package edu.upc.dsa.models;
 
 import edu.upc.dsa.util.RandomUtils;
+import edu.upc.dsa.models.Ability;
 
 import java.util.HashMap;
 
@@ -12,7 +13,10 @@ public class Player{
     private int currentLevel;
     private int currentMission;
     private double money;
-    //private HashMap<String, Mision> misionesHashMap;
+    private HashMap<String, Ability> abilities;
+
+
+//private HashMap<String, Mision> misionesHashMap;
 
 
     public Player(String userName, String password, String email, int currentLevel, int currentMission, double money) {
@@ -81,11 +85,18 @@ public class Player{
         this.money = money;
     }
 
+    public HashMap<String, Ability> getAbilities() {return abilities;}
+
+    public void setAbilities(HashMap<String, Ability> abilities) {this.abilities = abilities;}
+
     public Player(String userName, String password, String email) {
         this.idPlayer = RandomUtils.getId();
         this.userName = userName;
         this.password = password;
         this.email = email;
+    }
+    public void addAbility(Ability ability) {
+        this.abilities.put(ability.getIdAbility(), ability);
     }
 
     public Player() {
