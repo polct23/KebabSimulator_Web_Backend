@@ -75,9 +75,25 @@
             // Limpia el indicador de inicio de sesión automático
             localStorage.removeItem('autoLogin');
         }
+
+        // Cargar las habilidades y añadir botones de compra
+        fetch('fetchWeapons.js')  // Suponiendo que fetchWeapons.js devuelve los datos en formato JSON
+            .then(response => response.json())
+            .then(data => {
+                const abilitiesList = document.getElementById('abilities-list');
+                data.forEach(ability => {
+                    const listItem = document.createElement('li');
+                    listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+                    listItem.innerHTML = `
+                        <span>${ability.name}</span>
+                        <button class="btn btn-primary btn-sm" onclick="purchaseItem('${ability.id}')">Comprar</button>
+                    `;
+                    abilitiesList.appendChild(listItem);
+                });
+            })
+            .catch(error => console.error('Error fetching abilities:', error));
     });
 </script>
-<script src="fetchWeapons.js"></script>
 <script src="purchaseItem.js"></script>
 </body>
 </html>
