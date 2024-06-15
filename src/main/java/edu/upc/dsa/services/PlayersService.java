@@ -1,7 +1,6 @@
 package edu.upc.dsa.services;
 
 import edu.upc.dsa.ExceptionMapper.WrongCredentialsException;
-import edu.upc.dsa.models.User;
 import edu.upc.dsa.models.Player;
 import edu.upc.dsa.PlayerList;
 import edu.upc.dsa.PlayerListImpl;

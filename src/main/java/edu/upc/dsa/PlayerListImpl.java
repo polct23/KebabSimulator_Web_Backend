@@ -1,13 +1,11 @@
 package edu.upc.dsa;
 
 import edu.upc.dsa.ExceptionMapper.WrongCredentialsException;
-import edu.upc.dsa.models.Ability;
 import edu.upc.dsa.models.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.upc.dsa.models.User;
 import org.apache.log4j.Logger;
 
 public class PlayerListImpl implements PlayerList {
@@ -126,14 +124,14 @@ public class PlayerListImpl implements PlayerList {
 
         try {
             session = FactorySession.openSession();
-            User user = (User) session.get(User.class, "userName", userName);
-            if(user.getPassword().equals(password)) {
+            Player player = (Player) session.get(Player.class, "userName", userName);
+            if(Player.getPassword().equals(password)) {
                 ans = true;
             }
             else{
                 throw new WrongCredentialsException();
             }
-            logger.info("getUser(" + userName + "): " + user);
+            logger.info("getPlayer(" + userName + "): " + player);
             return ans;
 
         } catch (Exception e){

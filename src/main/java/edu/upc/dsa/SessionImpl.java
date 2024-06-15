@@ -1,6 +1,6 @@
 package edu.upc.dsa;
 
-import edu.upc.dsa.models.User;
+import edu.upc.dsa.models.Player;
 import edu.upc.dsa.util.ObjectHelper;
 import edu.upc.dsa.util.QueryHelper;
 
@@ -19,11 +19,11 @@ public class SessionImpl implements Session {
 
     public void save(Object entity) {
 
-        if(entity.getClass() == User.class){
-            User u = new User();
-            u.setUserName(((User) entity).getUserName());
-            u.setPassword(((User) entity).getPassword());
-            u.setEmail(((User) entity).getEmail());
+        if(entity.getClass() == Player.class){
+            Player u = new Player();
+            u.setUserName(((Player) entity).getUserName());
+            u.setPassword(((Player) entity).getPassword());
+            u.setEmail(((Player) entity).getEmail());
             entity = u;
         }
         // INSERT INTO Partida () ()
@@ -111,8 +111,23 @@ public class SessionImpl implements Session {
     }
     */
 
-    public void update(Object object) {
+    public void updateJugador(String columna, String user, String value) throws SQLIntegrityConstraintViolationException {
+        String updateQuery = QueryHelper.createQueryUPDATEPlayer(columna, user, value);
 
+        PreparedStatement pstm = null;
+        try {
+            pstm = conn.prepareStatement(updateQuery);
+            pstm.setObject(1, value);
+            pstm.setObject(2, user);
+
+            pstm.executeUpdate();
+
+        } catch (SQLIntegrityConstraintViolationException e) {
+            // Handle constraint violation exception (e.g., unique constraint violation)
+            throw new SQLIntegrityConstraintViolationException();
+        }  catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void delete(Object entity, String columna) {
