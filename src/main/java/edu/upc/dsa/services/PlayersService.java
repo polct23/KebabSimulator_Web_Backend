@@ -1,6 +1,7 @@
 package edu.upc.dsa.services;
 
 import edu.upc.dsa.ExceptionMapper.WrongCredentialsException;
+import edu.upc.dsa.models.Ability;
 import edu.upc.dsa.models.Player;
 import edu.upc.dsa.PlayerList;
 import edu.upc.dsa.PlayerListImpl;
@@ -112,4 +113,6 @@ public class PlayersService {
             return Response.status(Response.Status.UNAUTHORIZED).entity("{\"message\":\"Unauthorized - Incorrect username or password\"}").build();
         }
     }
+
+
 }
