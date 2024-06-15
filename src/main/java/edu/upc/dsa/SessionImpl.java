@@ -1,5 +1,7 @@
 package edu.upc.dsa;
 
+
+import edu.upc.dsa.models.Player;
 import edu.upc.dsa.util.ObjectHelper;
 import edu.upc.dsa.util.QueryHelper;
 
@@ -18,11 +20,11 @@ public class SessionImpl implements Session {
 
     public void save(Object entity) {
 
-        if(entity.getClass() == User.class){
-            User u = new User();
-            u.setUserName(((User) entity).getUserName());
-            u.setPassword(((User) entity).getPassword());
-            u.setEmail(((User) entity).getEmail());
+        if(entity.getClass() == Player.class){
+            Player u = new Player();
+            u.setUserName(((Player) entity).getUserName());
+            u.setPassword(((Player) entity).getPassword());
+            u.setEmail(((Player) entity).getEmail());
             entity = u;
         }
         // INSERT INTO Partida () ()
@@ -82,36 +84,24 @@ public class SessionImpl implements Session {
 
         return o;
     }
-/*
-    public Object get(Class theClass, int ID) {
 
-        String sql = QueryHelper.createQuerySELECT(theClass);
+    public void updateJugador(String columna, String user, String value) throws SQLIntegrityConstraintViolationException {
+        String updateQuery = QueryHelper.createQueryUPDATEPlayer(columna, user, value);
 
-        Object o = theClass.newInstance();
+        PreparedStatement pstm = null;
+        try {
+            pstm = conn.prepareStatement(updateQuery);
+            pstm.setObject(1, value);
+            pstm.setObject(2, user);
 
+            pstm.executeUpdate();
 
-        ResultSet res = null;
-
-        ResultSetMetaData rsmd = res.getMetaData();
-
-        int numColumns = rsmd.getColumnCount();
-        int i=0;
-
-        while (i<numColumns) {
-            String key = rsmd.getColumnName(i);
-            String value = res.getObject(i);
-
-            ObjectHelper.setter(o, key, value);
-
+        } catch (SQLIntegrityConstraintViolationException e) {
+            // Handle constraint violation exception (e.g., unique constraint violation)
+            throw new SQLIntegrityConstraintViolationException();
+        }  catch (SQLException e) {
+            e.printStackTrace();
         }
-
-
-        return null;
-    }
-    */
-
-    public void update(Object object) {
-
     }
 
     public void delete(Object entity, String columna) {
@@ -157,24 +147,7 @@ public class SessionImpl implements Session {
         return list;
     }
 
-    public List<Object> findAll(Class theClass, HashMap params) {
-     /*   String theQuery = QueryHelper.createSelectFindAll(theClass, params);
-        PreparedStatement pstm = null;
-        pstm = conn.prepareStatement(theQuery);
 
-        int i=1;
-        for (Object value : params.values()) {
-            pstm.setObject(i++, value );
-        }
-        //ResultSet rs = pstm.executeQuery();
-
-
-
-
-        return result;
-*/
-     return null;
-    }
 
     public List<Object> query(String query, Class theClass, HashMap params) {
         return null;

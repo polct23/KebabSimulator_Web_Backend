@@ -6,6 +6,7 @@ import edu.upc.dsa.PlayerList;
 import edu.upc.dsa.PlayerListImpl;
 
 
+import edu.upc.dsa.models.TransferClass;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -89,8 +90,8 @@ public class PlayersService {
             @ApiResponse(code = 404, message = "Player not found")
     })
     @Path("/updateUserPassword")
-    public Response updateUserPassword(Player player) {
-        Player p = this.pl.updatePassword(player,player.getPassword());
+    public Response updateUserPassword(TransferClass t) {
+        Player p = this.pl.updatePassword(t.getUserName(), t.getNewPasword());
         if(p==null) return Response.status(404).build();
         return Response.status(201).build();
     }

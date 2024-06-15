@@ -71,4 +71,13 @@ public class QueryHelper {
 
         return sb.toString();
     }
+
+    public static String createQueryUPDATEPlayer(String columna, String user, String value) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("UPDATE Player ");
+        sb.append("SET " + columna + " = ?");
+        sb.append(" WHERE USERNAME = ?");
+
+        return sb.toString();
+    }
 }

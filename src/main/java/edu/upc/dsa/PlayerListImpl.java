@@ -124,14 +124,14 @@ public class PlayerListImpl implements PlayerList {
 
         try {
             session = FactorySession.openSession();
-            User user = (User) session.get(User.class, "userName", userName);
-            if(user.getPassword().equals(password)) {
+            Player player = (Player) session.get(Player.class, "userName", userName);
+            if(player.getPassword().equals(password)) {
                 ans = true;
             }
             else{
                 throw new WrongCredentialsException();
             }
-            logger.info("getUser(" + userName + "): " + user);
+            logger.info("getPlayer(" + userName + "): " + player);
             return ans;
 
         } catch (Exception e){
@@ -141,19 +141,28 @@ public class PlayerListImpl implements PlayerList {
         return ans;
     }
     @Override
-    public Player updatePassword(Player player, String newPassword){
-        if(player != null) {
-            logger.info(player + "received");
-
-            for(Player ps : this.players) {
-                if(ps.getIdPlayer().equals(player.getIdPlayer())) {
-                    ps.setPassword(newPassword);
-                }
-                logger.info(player + "updated");
+    public Player updatePassword(String userName, String newPassword){
+        Session session = null;
+        Player player;
+        try {
+            session = FactorySession.openSession();
+            player = (Player) session.get(Player.class, "userName", userName);
+            if(player != null) {
+                session.updateJugador("password", userName , newPassword);
+                logger.info("password updated correctly");
+                return player;
+            } else {
+                logger.warn("not found " + userName);
+                return null;
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
             }
         }
-        else logger.warn("not found" + player);
-        return player;
+        return null;
     }
 
 }
