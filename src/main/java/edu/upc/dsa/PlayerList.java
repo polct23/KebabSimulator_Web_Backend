@@ -1,11 +1,8 @@
 package edu.upc.dsa;
 import edu.upc.dsa.ExceptionMapper.WrongCredentialsException;
 import edu.upc.dsa.models.Player;
-import edu.upc.dsa.models.User;
 
-import javax.ws.rs.WebApplicationException;
 import java.util.List;
-import java.util.HashMap;
 
 public interface PlayerList {
     public Player addPlayer(Player player);

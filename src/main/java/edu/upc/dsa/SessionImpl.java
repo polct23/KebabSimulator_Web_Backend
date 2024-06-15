@@ -1,6 +1,5 @@
 package edu.upc.dsa;
 
-import edu.upc.dsa.models.User;
 import edu.upc.dsa.util.ObjectHelper;
 import edu.upc.dsa.util.QueryHelper;
 

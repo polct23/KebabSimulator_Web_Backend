@@ -1,13 +1,11 @@
 package edu.upc.dsa;
 
 import edu.upc.dsa.ExceptionMapper.WrongCredentialsException;
-import edu.upc.dsa.models.Ability;
 import edu.upc.dsa.models.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.upc.dsa.models.User;
 import org.apache.log4j.Logger;
 
 public class PlayerListImpl implements PlayerList {
