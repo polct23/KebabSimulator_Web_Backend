@@ -27,7 +27,7 @@ async function handleLogin(username, password) {
             // Mostrar modal de éxito
             $('#successModal').modal('show');
             document.getElementById('successModalButton').addEventListener('click', function() {
-                window.location.href = '/listaObjetos.html'; // Redirige a la página listaObjetos.html
+                window.location.href = '/menu.html'; // Redirige a la página menu.html
             });
         } else {
             // Si el mensaje no indica un inicio de sesión exitoso, lanza un error

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Mouse+Memoirs&display=swap');
+
+        body {
+            background-color: #fbf1a9;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+            font-family: 'Mouse Memoirs', sans-serif;
+            margin-top: 50px;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .menu-image {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto 20px;
+            border-radius: 15px;
+        }
+        .card {
+            margin-top: 20px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+<h1>Menu</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="https://via.placeholder.com/400x300" alt="Menu Image" class="menu-image">
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Menu</h5>
+                    <button id="profileButton" class="btn btn-primary btn-block" aria-label="Perfil">Perfil</button>
+                    <button id="storeButton" class="btn btn-primary btn-block" aria-label="Tienda">Tienda</button>
+                    <button id="enemyListButton" class="btn btn-primary btn-block" aria-label="Lista de Enemigos">Lista de Enemigos</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('profileButton').addEventListener('click', function() {
+        window.location.href = '/profile.html';
+    });
+
+    document.getElementById('storeButton').addEventListener('click', function() {
+        window.location.href = '/listaObjetos.html';
+    });
+
+    document.getElementById('enemyListButton').addEventListener('click', function() {
+        window.location.href = '/enemyList.html';
+    });
+</script>
+</body>
+</html>
