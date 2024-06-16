@@ -10,6 +10,9 @@ public interface Session<E> {
     void close();
     Object get(Class theClass, String column, Object ID) throws SQLException, NoSuchFieldException, IllegalAccessException, InstantiationException;                                 // cRud
 
+    // Nuevo método get con dos columnas
+    Object get(Class theClass, String column1, Object value1, String column2, Object value2) throws SQLException, NoSuchFieldException, IllegalAccessException, InstantiationException;
+
     public void updateJugador(String columna, String user, Object value) throws SQLIntegrityConstraintViolationException;// crUd
     void delete(Object object, String columna);                                         // cruD
     List<Object> findAll(Class theClass);                               // cR

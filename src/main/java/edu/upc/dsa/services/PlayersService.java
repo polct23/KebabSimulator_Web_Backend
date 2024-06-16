@@ -1,5 +1,6 @@
 package edu.upc.dsa.services;
 
+import edu.upc.dsa.ExceptionMapper.AbilityAlreadyPurchasedException;
 import edu.upc.dsa.ExceptionMapper.UserNotFoundException;
 import edu.upc.dsa.ExceptionMapper.WrongCredentialsException;
 import edu.upc.dsa.models.Ability;
@@ -58,7 +59,7 @@ public class PlayersService {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response= Player.class),
             @ApiResponse(code = 500, message = "Validation error"),
-            @ApiResponse(code = 409, message = "Validation conflict")
+            @ApiResponse(code = 409, message = "Player already exists")
     })
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -133,20 +134,28 @@ public class PlayersService {
     }
 
     @POST
-    @ApiOperation(value = "create a new Player", notes = "---")
+    @ApiOperation(value = "Buy an ability", notes = "---")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response= Ability.class),
-            @ApiResponse(code = 500, message = "Validation error"),
-            @ApiResponse(code = 409, message = "Validation conflict")
+            @ApiResponse(code = 200, message = "Successful", response = Ability.class),
+            @ApiResponse(code = 409, message = "Ability already purchased")
     })
-    @Path("/buyAbility")
+    @Path("/buyAbility/{idAbility}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response buyAbility(TransferClass t) throws UserNotFoundException {
-        try{this.pl.buyAbilites(t.getUserName(), t.getNewPasword());}
-        catch(UserNotFoundException e){
+    public Response buyAbility(@PathParam("idAbility") String idAbility, Player player) {
+        try {
+            // Obtener el nombre del jugador del objeto Player
+            String userName = player.getUserName();
+
+            // Llamar al método buyAbilites con el nombre del jugador y el ID de la habilidad
+            this.pl.buyAbilites(userName, idAbility);
+
+            // Si se realizó la compra correctamente, devolver una respuesta exitosa (código 200)
+            return Response.status(200).build();
+        } catch (UserNotFoundException | AbilityAlreadyPurchasedException e) {
+            // Si el jugador no se encuentra, devolver un código de estado 409 (conflicto)
             return Response.status(409).build();
         }
-        return Response.status(201).build();
     }
+
 
 }

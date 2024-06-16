@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
             password: password
         };
 
-        fetch('/dsaApp/users/newUser', {
+        fetch('/dsaApp/players', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

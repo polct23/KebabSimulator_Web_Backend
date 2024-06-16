@@ -1,9 +1,11 @@
 package edu.upc.dsa;
 
+import edu.upc.dsa.ExceptionMapper.AbilityAlreadyPurchasedException;
 import edu.upc.dsa.ExceptionMapper.UserNotFoundException;
 import edu.upc.dsa.ExceptionMapper.WrongCredentialsException;
 import edu.upc.dsa.models.Ability;
 import edu.upc.dsa.models.Player;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,22 +30,39 @@ public class PlayerListImpl implements PlayerList {
     }
 
     @Override
-    public void buyAbilites(String userName, String abilityName) throws UserNotFoundException{
+    public void buyAbilites(String userName, String idAbility) throws UserNotFoundException, AbilityAlreadyPurchasedException {
         Session session = null;
         Player player;
+        Ability ability;
         try {
             session = FactorySession.openSession();
+            // Obtener el jugador
             player = (Player) session.get(Player.class, "userName", userName);
-            if(player != null) {
-                Ability ab = (Ability) session.get(Ability.class, "abilityName", abilityName);
-                PlayersAbility pa = new PlayersAbility(player.getIdPlayer(), ab.getIdAbility());
+            if (player != null) {
+                // Verificar si el jugador ya tiene la habilidad
+                PlayersAbility pa = (PlayersAbility) session.get(PlayersAbility.class, "idPlayer", player.getIdPlayer(), "idAbility", idAbility);
+                if (pa != null) {
+                    // Si el jugador ya tiene esta habilidad, lanzar excepción
+                    throw new AbilityAlreadyPurchasedException();
+                }
+
+                // Obtener la habilidad por su ID
+                ability = (Ability) session.get(Ability.class, "idAbility", idAbility);
+                if (ability == null) {
+                    throw new IllegalArgumentException("Ability not found with ID: " + idAbility);
+                }
+
+                // Crear la relación entre el jugador y la habilidad
+                pa = new PlayersAbility(player.getIdPlayer(), idAbility);
                 session.save(pa);
                 logger.info(userName + " new ability bought correctly.");
             } else {
-                logger.warn("not found " + userName);
+                logger.warn("User not found: " + userName);
                 throw new UserNotFoundException();
             }
-        } catch (Exception e){
+        } catch (UserNotFoundException | AbilityAlreadyPurchasedException e) {
+            throw e; // Re-lanzar las excepciones específicas
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             if (session != null) {
@@ -51,6 +70,12 @@ public class PlayerListImpl implements PlayerList {
             }
         }
     }
+
+
+
+
+
+
 
     @Override
     public List<Ability> getPlayersAbility(String userName) throws UserNotFoundException {

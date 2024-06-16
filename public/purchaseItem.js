@@ -1,6 +1,8 @@
 // purchaseItem.js
 function purchaseItem(abilityId) {
-    // Obtener el ID del jugador (suponiendo que se almacena en el localStorage)
+    console.log("Ability ID: ", abilityId); // Verificar el ID de la habilidad
+
+    // Obtener el nombre de usuario del localStorage
     const username = localStorage.getItem('username');
 
     if (!username) {
@@ -8,16 +10,24 @@ function purchaseItem(abilityId) {
         return;
     }
 
+    // Crear el objeto Player
+    const player = {
+        userName: username
+    };
+
     // Realizar una solicitud para comprar la habilidad
-    fetch(`/api/players/${username}/abilities/${abilityId}`, {
-        method: 'PUT',
+    fetch(`http://localhost:8080/dsaApp/players/buyAbility/${abilityId}`, {
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify(player) // Enviar el objeto Player como JSON
     })
         .then(response => {
             if (response.ok) {
                 alert('Ability purchased successfully!');
+            } else if (response.status === 409) {
+                alert('Ability already purchased.');
             } else {
                 alert('Failed to purchase ability.');
             }

@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function fetchWeapons() {
-    fetch('/dsaApp/weapons/getWeapons', {
+    fetch('/dsaApp/abilities/getAbilities', {
         headers: {
             'Cache-Control': 'no-cache', // Indica al navegador no almacenar la respuesta en caché
             'Pragma': 'no-cache' // Compatibilidad con HTTP/1.0
@@ -28,41 +28,41 @@ function fetchWeapons() {
 function displayWeapons(data) {
     const listElement = document.getElementById('weapons-list');
     listElement.innerHTML = '';
-    data.forEach(weapon => {
-        const card = createWeaponCard(weapon);
+    data.forEach(ability => {
+        const card = createWeaponCard(ability);
         listElement.appendChild(card);
     });
 }
 
-function createWeaponCard(weapon) {
+function createWeaponCard(ability) {
     const card = document.createElement('div');
     card.className = 'card mb-3';
 
     const cardBody = document.createElement('div');
     cardBody.className = 'card-body';
 
-    const weaponName = document.createElement('h5');
-    weaponName.className = 'card-title';
-    weaponName.textContent = weapon.weaponName;
+    const abilityName = document.createElement('h5');
+    abilityName.className = 'card-title';
+    abilityName.textContent = ability.abilityName;
 
-    const weaponID = document.createElement('h6');
-    weaponID.className = 'card-subtitle mb-2 text-muted';
-    weaponID.textContent = `ID: ${weapon.idWeapon}`;
+    const idAbility = document.createElement('h6');
+    idAbility.className = 'card-subtitle mb-2 text-muted';
+    idAbility.textContent = `ID: ${ability.idAbility}`;
 
     const description = document.createElement('p');
     description.className = 'card-text';
-    description.textContent = `Description: ${weapon.description}`;
+    description.textContent = `Description: ${ability.description}`;
 
     const damage = document.createElement('p');
     damage.className = 'card-text';
-    damage.textContent = `Damage: ${weapon.damage}`;
+    damage.textContent = `Damage: ${ability.damage}`;
 
     const price = document.createElement('p');
     price.className = 'card-text';
-    price.textContent = `Price: $${weapon.price}`;
+    price.textContent = `Price: $${ability.price}`;
 
-    cardBody.appendChild(weaponName);
-    cardBody.appendChild(weaponID);
+    cardBody.appendChild(abilityName);
+    cardBody.appendChild(idAbility);
     cardBody.appendChild(description);
     cardBody.appendChild(damage);
     cardBody.appendChild(price);

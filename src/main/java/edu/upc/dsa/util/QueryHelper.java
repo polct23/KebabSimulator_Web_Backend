@@ -55,6 +55,13 @@ public class QueryHelper {
 
         return sb.toString();
     }
+    public static String createQuerySELECTWithTwoColumns(Class theClass, String column1, String column2) {
+        StringBuilder query = new StringBuilder();
+        query.append("SELECT * FROM ").append(theClass.getSimpleName())
+                .append(" WHERE ").append(column1).append(" = ? AND ")
+                .append(column2).append(" = ?");
+        return query.toString();
+    }
 
 
     public static String createQuerySELECTall(Class theClass) {
