@@ -40,7 +40,13 @@ CREATE TABLE `ability` (
 LOCK TABLES `ability` WRITE;
 /*!40000 ALTER TABLE `ability` DISABLE KEYS */;
 INSERT INTO `ability` VALUES
-('12hhd','Cuchillo','afilado',3,2.5);
+('12hhd','Cuchillo','Arma mÃ¡xima',3,9000),
+('C6m243082445','VidaExtra2','Aumenta tu vida mÃ¡xima en un 30%',30,300),
+('ggJw085173193627','Arma1','Aumenta tu fuerza 20',20,75),
+('ghbjULV7185477361','VidaExtra1','Aumenta tu vida mÃ¡xima en un 15%',15,200),
+('p34466035669','Velocidad2','Aumenta mucho tu velocidad',20,200),
+('Qel5325309712031668','Arma2','Aumenta tu fuerza hasta 50',50,275),
+('T_pTA066852230','Velocidad1','Aumenta un poco tu velocidad',10,100);
 /*!40000 ALTER TABLE `ability` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -68,6 +74,13 @@ CREATE TABLE `enemy` (
 
 LOCK TABLES `enemy` WRITE;
 /*!40000 ALTER TABLE `enemy` DISABLE KEYS */;
+INSERT INTO `enemy` VALUES
+('0vfaEq3764051',10,'Enemigo con movimiento evasivo',10,'Rata'),
+('bozRmi3C127560865499',3,'Enemigo mejorado con movimiento aleatorio',30,'Cucaracha'),
+('fffkjsfkvn339393',3,'Enemigo inmortal con movimiento fijo',0,'Fantasma'),
+('MKI06021334109',15,'Enemigo muy agresivo y peligroso',45,'Escarabajo'),
+('SAJKjjns890',10,'Boss final',300,'???'),
+('zWg468968',2,'Enemigo bÃ¡sico con movimiento aleatorio',10,'Slime');
 /*!40000 ALTER TABLE `enemy` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -79,11 +92,8 @@ DROP TABLE IF EXISTS `mission`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mission` (
-  `description` varchar(50) DEFAULT NULL,
-  `reward` int(11) DEFAULT NULL,
-  `idMission` varchar(50) NOT NULL,
-  PRIMARY KEY (`idMission`),
-  UNIQUE KEY `idMission` (`idMission`)
+  `description` longtext DEFAULT NULL,
+  `reward` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -93,6 +103,13 @@ CREATE TABLE `mission` (
 
 LOCK TABLES `mission` WRITE;
 /*!40000 ALTER TABLE `mission` DISABLE KEYS */;
+INSERT INTO `mission` VALUES
+('Matar a 5 Slimes',10),
+('Recoger la madera',10),
+('Matar a 3 Ratas',45),
+('Busca la casa del inspector',0),
+('Matar a los bichos de la cueva',100),
+('Mata al inspector',300);
 /*!40000 ALTER TABLE `mission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -165,4 +182,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-16 11:43:18
+-- Dump completed on 2024-06-16 20:43:12
