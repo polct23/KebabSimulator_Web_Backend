@@ -16,7 +16,7 @@
             margin-top: 50px;
             color: #6c757d;
         }
-        #abilities-list {
+        #weapons-list {
             padding-left: 0;
         }
         .card {
@@ -29,12 +29,6 @@
         .card-body {
             padding: 20px;
         }
-        .list-group-item {
-            margin-bottom: 10px;
-        }
-        .list-group-item:last-child {
-            border-bottom: none;
-        }
         .alert-auto-login {
             margin-top: 20px;
         }
@@ -45,9 +39,9 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <ul id="abilities-list" class="list-group">
+            <div id="weapons-list" class="list-group">
                 <!-- Los datos de las armas se cargarán aquí por el script fetchWeapons.js -->
-            </ul>
+            </div>
         </div>
     </div>
     <div class="row justify-content-center">
@@ -58,6 +52,87 @@
 </div>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetchWeapons(); // Siempre tratar de obtener la versión más reciente de las armas
+    });
+
+    function fetchWeapons() {
+        fetch('/dsaApp/abilities/getAbilities', {
+            headers: {
+                'Cache-Control': 'no-cache', // Indica al navegador no almacenar la respuesta en caché
+                'Pragma': 'no-cache' // Compatibilidad con HTTP/1.0
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                displayWeapons(data); // Mostrar los datos directamente obtenidos del servidor
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                alert('Failed to load weapons from server. Please try again later.');
+            });
+    }
+
+    function displayWeapons(data) {
+        const listElement = document.getElementById('weapons-list');
+        listElement.innerHTML = '';
+        data.forEach(ability => {
+            const card = createWeaponCard(ability);
+            listElement.appendChild(card);
+        });
+    }
+
+    function createWeaponCard(ability) {
+        const card = document.createElement('div');
+        card.className = 'card mb-3';
+
+        const cardBody = document.createElement('div');
+        cardBody.className = 'card-body';
+
+        const abilityName = document.createElement('h5');
+        abilityName.className = 'card-title';
+        abilityName.textContent = ability.abilityName;
+
+        const idAbility = document.createElement('h6');
+        idAbility.className = 'card-subtitle mb-2 text-muted';
+        idAbility.textContent = `ID: ${ability.idAbility}`;
+
+        const description = document.createElement('p');
+        description.className = 'card-text';
+        description.textContent = `Description: ${ability.description}`;
+
+        const damage = document.createElement('p');
+        damage.className = 'card-text';
+        damage.textContent = `Damage: ${ability.damage}`;
+
+        const price = document.createElement('p');
+        price.className = 'card-text';
+        price.textContent = `Price: $${ability.price}`;
+
+        const buyButton = document.createElement('button');
+        buyButton.className = 'btn btn-primary';
+        buyButton.textContent = 'Buy';
+        buyButton.onclick = function() {
+            purchaseItem(ability.idAbility); // Pasar solo el ID de la habilidad
+        };
+
+        cardBody.appendChild(abilityName);
+        cardBody.appendChild(idAbility);
+        cardBody.appendChild(description);
+        cardBody.appendChild(damage);
+        cardBody.appendChild(price);
+        cardBody.appendChild(buyButton);
+
+        card.appendChild(cardBody);
+        return card;
+    }
+
+
     // Verifica si el usuario está autenticado
     document.addEventListener('DOMContentLoaded', function() {
         const userStatus = localStorage.getItem('userStatus');
@@ -75,23 +150,6 @@
             // Limpia el indicador de inicio de sesión automático
             localStorage.removeItem('autoLogin');
         }
-
-        // Cargar las habilidades y añadir botones de compra
-        fetch('fetchWeapons.js')  // Suponiendo que fetchWeapons.js devuelve los datos en formato JSON
-            .then(response => response.json())
-            .then(data => {
-                const abilitiesList = document.getElementById('abilities-list');
-                data.forEach(ability => {
-                    const listItem = document.createElement('li');
-                    listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
-                    listItem.innerHTML = `
-                        <span>${ability.name}</span>
-                        <button class="btn btn-primary btn-sm" onclick="purchaseItem('${ability.id}')">Comprar</button>
-                    `;
-                    abilitiesList.appendChild(listItem);
-                });
-            })
-            .catch(error => console.error('Error fetching abilities:', error));
     });
 </script>
 <script src="purchaseItem.js"></script>

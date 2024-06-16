@@ -85,6 +85,42 @@ public class SessionImpl implements Session {
 
         return o;
     }
+    @Override
+    public Object get(Class theClass, String column1, Object value1, String column2, Object value2) throws SQLException, NoSuchFieldException, IllegalAccessException, InstantiationException {
+        String selectQuery = QueryHelper.createQuerySELECTWithTwoColumns(theClass, column1, column2);
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+
+        try {
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setObject(1, value1);
+            pstm.setObject(2, value2);
+            rs = pstm.executeQuery();
+
+            Object result = null;
+
+            if (rs.next()) {
+                result = theClass.newInstance();
+                ResultSetMetaData rsmd = rs.getMetaData();
+                int numberOfColumns = rsmd.getColumnCount();
+
+                for (int i = 1; i <= numberOfColumns; i++) {
+                    String columnName = rsmd.getColumnName(i);
+                    ObjectHelper.setter(result, columnName, rs.getObject(i));
+                }
+            }
+
+            return result;
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pstm != null) {
+                pstm.close();
+            }
+        }
+    }
 
     public void updateJugador(String columna, String user, Object value) throws SQLIntegrityConstraintViolationException {
         String updateQuery = QueryHelper.createQueryUPDATEPlayer(columna);

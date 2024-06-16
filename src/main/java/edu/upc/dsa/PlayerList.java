@@ -1,4 +1,5 @@
 package edu.upc.dsa;
+import edu.upc.dsa.ExceptionMapper.AbilityAlreadyPurchasedException;
 import edu.upc.dsa.ExceptionMapper.UserNotFoundException;
 import edu.upc.dsa.ExceptionMapper.WrongCredentialsException;
 import edu.upc.dsa.models.Ability;
@@ -7,7 +8,7 @@ import edu.upc.dsa.models.Player;
 import java.util.List;
 
 public interface PlayerList {
-    public void buyAbilites(String userName, String idAbility) throws UserNotFoundException;
+    public void buyAbilites(String userName, String idAbility) throws UserNotFoundException, AbilityAlreadyPurchasedException;
     List<Ability> getPlayersAbility(String userName) throws UserNotFoundException;
     public Player addPlayer(Player player);
     public Player getPlayer(String idPlayer);

@@ -27,4 +27,13 @@ public class PlayersAbility {
         this.idPlayer = idPlayer;
         this.idAbility = idAbility;
     }
+
+    public boolean isAbilityPurchased (String idPlayer, String idAbility){
+        if(this.idPlayer.equals(idPlayer) && this.idAbility.equals(idAbility)){
+            return true;
+        }
+        else
+            return false;
+
+    }
 }
