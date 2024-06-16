@@ -46,11 +46,11 @@ public class MissionsService {
             @ApiResponse(code = 201, message = "Successful", response = Mission.class),
             @ApiResponse(code = 500, message = "Validation error")
     })
-    @Path("/newAbility")
+    @Path("/newMission")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response newMission(Mission mission) {
-        Mission newMission = new Mission(mission.getReward(), mission.getDescription());
-        if(newMission.getIdMission()==null || newMission.getDescription()==null) return Response.status(500).entity(newMission).build();
+        Mission newMission = new Mission( mission.getReward(), mission.getDescription());
+        if(newMission.getDescription()==null) return Response.status(500).entity(newMission).build();
         this.ml.addMission(newMission);
         return Response.status(201).entity(newMission).build();
     }

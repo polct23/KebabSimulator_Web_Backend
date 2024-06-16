@@ -46,10 +46,10 @@ public class PlayersService {
             @ApiResponse(code = 200, message = "Successful", response = Player.class),
             @ApiResponse(code = 404, message = "User not found")
     })
-    @Path("/{id}")
+    @Path("/{userName}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPlayer(@PathParam("id") String idPlayer) {
-        Player player = this.pl.getPlayer(idPlayer);
+    public Response getPlayer(@PathParam("userName") String userName) {
+        Player player = this.pl.getPlayer(userName);
         if(player == null) return Response.status(404).build();
         else return Response.status(200).entity(player).build();
     }
