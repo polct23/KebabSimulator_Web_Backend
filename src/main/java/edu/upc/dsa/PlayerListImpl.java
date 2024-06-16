@@ -196,7 +196,7 @@ public class PlayerListImpl implements PlayerList {
     }
 
     @Override
-    public void updateStatements(String userName, int currentMission, int money, int currentLevel) throws UserNotFoundException{
+    public void updateStatements(String userName, int currentMission, double money, int currentLevel) throws UserNotFoundException{
         Session session = null;
         Player player;
         try {

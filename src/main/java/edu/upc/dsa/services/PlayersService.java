@@ -156,6 +156,19 @@ public class PlayersService {
             return Response.status(409).build();
         }
     }
-
+    @PUT
+    @ApiOperation(value = "update Player's advancements in the game", notes = "---")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 404, message = "Player not found")
+    })
+    @Path("/updatePlayerAdvancements")
+    public Response updatePlayerAdvancements(Player player) throws UserNotFoundException {
+        try{this.pl.updateStatements(player.getUserName(), player.getCurrentMission(),player.getMoney(), player.getCurrentLevel());}
+        catch(UserNotFoundException e){
+            return Response.status(404).build();
+        }
+        return Response.status(201).build();
+    }
 
 }

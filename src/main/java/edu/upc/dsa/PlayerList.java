@@ -14,7 +14,7 @@ public interface PlayerList {
     public Player getPlayer(String idPlayer);
     public List<Player> getPlayers();
     public void deletePlayer(String idPlayer);
-    public void updateStatements(String userName, int lastMission, int currentPoints, int money) throws UserNotFoundException;
+    public void updateStatements(String userName, int lastMission, double currentPoints, int money) throws UserNotFoundException;
     boolean authenticateUser(String userName, String password) throws WrongCredentialsException;
 
     int size();
