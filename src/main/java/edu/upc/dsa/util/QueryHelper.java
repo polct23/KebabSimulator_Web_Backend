@@ -89,13 +89,10 @@ public class QueryHelper {
         return sb.toString();
     }
 
-    public String createQueryPlayerAbilities() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("SELECT p.userName, a.abilityName ")
-                .append("FROM player p ")
-                .append("JOIN player_ability pa ON p.idPlayer = ? ")
-                .append("JOIN ability a ON pa.idAbility = ?");
-
-        return sb.toString();
+    public static String createQueryForPlayerAbilities() {
+        return "SELECT a.idAbility, a.abilityName FROM ability a " +
+                "JOIN playersability pa ON a.idAbility = pa.idAbility " +
+                "JOIN player p ON pa.idPlayer = p.idPlayer " +
+                "WHERE p.idPlayer = ?";
     }
 }

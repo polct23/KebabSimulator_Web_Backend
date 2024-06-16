@@ -54,16 +54,17 @@ public class PlayerListImpl implements PlayerList {
 
     @Override
     public List<Ability> getPlayersAbility(String userName) throws UserNotFoundException {
-        /* Session session = null;
+        Session session = null;
         Player player;
         try {
             session = FactorySession.openSession();
             player = (Player) session.get(Player.class, "userName", userName);
             if(player != null) {
-                Ability ab = (Ability) session.get(Ability.class, "abilityName", abilityName);
-                PlayersAbility pa = new PlayersAbility(player.getIdPlayer(), ab.getIdAbility());
-                session.save(pa);
-                logger.info(userName + " new ability bought correctly.");
+                List<Ability> la = session.findPlayerAbilities(player.getIdPlayer());
+                for(Ability a: la){
+                    logger.info(userName + " ability: " + a.getAbilityName());
+                }
+                return la;
             } else {
                 logger.warn("not found " + userName);
                 throw new UserNotFoundException();
@@ -75,8 +76,6 @@ public class PlayerListImpl implements PlayerList {
                 session.close();
             }
         }
-
-         */
         return null;
     }
 

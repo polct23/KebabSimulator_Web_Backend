@@ -14,7 +14,7 @@ public interface Session<E> {
     void delete(Object object, String columna);                                         // cruD
     List<Object> findAll(Class theClass);                               // cR
 
-    Object getPlayersAbilities(Class theClass, String column, Object entity) throws SQLException, NoSuchFieldException, IllegalAccessException, InstantiationException;
+    public List<Object> findPlayerAbilities(String playerId)  throws SQLException, NoSuchFieldException, IllegalAccessException, InstantiationException;
 
     List<Object> query(String query, Class theClass, HashMap params);
 }

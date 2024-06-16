@@ -1,5 +1,6 @@
 package edu.upc.dsa.services;
 
+import edu.upc.dsa.ExceptionMapper.UserNotFoundException;
 import edu.upc.dsa.ExceptionMapper.WrongCredentialsException;
 import edu.upc.dsa.models.Ability;
 import edu.upc.dsa.models.Player;
@@ -114,5 +115,38 @@ public class PlayersService {
         }
     }
 
+    @GET
+    @ApiOperation(value = "get Player", notes = "---")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful", response = Player.class),
+            @ApiResponse(code = 404, message = "User not found")
+    })
+    @Path("/abilities/{userName}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getPlayersAbilities(@PathParam("userName") String userName) throws UserNotFoundException {
+        List<Ability> al= this.pl.getPlayersAbility(userName);
+        if(al == null) return Response.status(404).build();
+        else{
+            GenericEntity<List<Ability>> entity = new GenericEntity<List<Ability>>(al){};
+            return Response.status(200).entity(al).build();
+        }
+    }
+
+    @POST
+    @ApiOperation(value = "create a new Player", notes = "---")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response= Player.class),
+            @ApiResponse(code = 500, message = "Validation error"),
+            @ApiResponse(code = 409, message = "Validation conflict")
+    })
+    @Path("/buyAbility")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response buyAbility(TransferClass t) throws UserNotFoundException {
+        try{this.pl.buyAbilites(t.getUserName(), t.getNewPasword());}
+        catch(UserNotFoundException e){
+            return Response.status(409).build();
+        }
+        return Response.status(201).build();
+    }
 
 }

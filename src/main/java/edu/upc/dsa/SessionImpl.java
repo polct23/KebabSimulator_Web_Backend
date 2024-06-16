@@ -1,6 +1,7 @@
 package edu.upc.dsa;
 
 
+import edu.upc.dsa.models.Ability;
 import edu.upc.dsa.models.Player;
 import edu.upc.dsa.util.ObjectHelper;
 import edu.upc.dsa.util.QueryHelper;
@@ -148,34 +149,39 @@ public class SessionImpl implements Session {
     }
 
     @Override
-    public Object getPlayersAbilities(Class theClass, String column, Object entity) throws SQLException, NoSuchFieldException, IllegalAccessException, InstantiationException {
-       /* String selectQuery = QueryHelper.createQueryUPDATEPlayersAblity(column);
+    public List<Object> findPlayerAbilities(String playerId) {
+        String query = QueryHelper.createQueryForPlayerAbilities();
         PreparedStatement pstm = null;
-        pstm = conn.prepareStatement(selectQuery);
-        pstm.setObject(1, entity);
-        ResultSet rs = pstm.executeQuery();
+        ResultSet rs;
+        List<Object> list = new LinkedList<>();
+        try {
+            pstm = conn.prepareStatement(query);
+            pstm.setString(1, playerId);
+            rs = pstm.executeQuery();
 
-        Object o = theClass.newInstance();
+            ResultSetMetaData metadata = rs.getMetaData();
+            int numberOfColumns = metadata.getColumnCount();
 
-        if (!rs.next()) {
-            // No records found
-            o = null;
-        } else{
-            ResultSetMetaData rsmd = rs.getMetaData();
-            int numberOfColumns = rsmd.getColumnCount();
-
-            do {
-                for (int i = 1; i <= numberOfColumns; i++) {
-                    String columnName = rsmd.getColumnName(i);
-                    ObjectHelper.setter(o, columnName, rs.getObject(i));
+            while (rs.next()) {
+                Object o = Ability.class.newInstance();
+                for (int j = 1; j <= numberOfColumns; j++) {
+                    String columnName = metadata.getColumnName(j);
+                    ObjectHelper.setter(o, columnName, rs.getObject(j));
                 }
-            } while (rs.next());
+                list.add(o);
+            }
+        } catch (SQLException | InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        } finally {
+            if (pstm != null) {
+                try {
+                    pstm.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-
-        return o;
-
-        */
-        return null;
+        return list;
     }
 
 
