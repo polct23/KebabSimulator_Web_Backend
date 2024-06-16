@@ -128,14 +128,14 @@ public class PlayersService {
         if(al == null) return Response.status(404).build();
         else{
             GenericEntity<List<Ability>> entity = new GenericEntity<List<Ability>>(al){};
-            return Response.status(200).entity(al).build();
+            return Response.status(200).entity(entity).build();
         }
     }
 
     @POST
     @ApiOperation(value = "create a new Player", notes = "---")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response= Player.class),
+            @ApiResponse(code = 201, message = "Successful", response= Ability.class),
             @ApiResponse(code = 500, message = "Validation error"),
             @ApiResponse(code = 409, message = "Validation conflict")
     })

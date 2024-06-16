@@ -149,7 +149,7 @@ public class SessionImpl implements Session {
     }
 
     @Override
-    public List<Object> findPlayerAbilities(String playerId) {
+    public List<Object> findPlayerAbilities(String playerId, Class theClass) {
         String query = QueryHelper.createQueryForPlayerAbilities();
         PreparedStatement pstm = null;
         ResultSet rs;
@@ -163,7 +163,7 @@ public class SessionImpl implements Session {
             int numberOfColumns = metadata.getColumnCount();
 
             while (rs.next()) {
-                Object o = Ability.class.newInstance();
+                Object o = theClass.newInstance();
                 for (int j = 1; j <= numberOfColumns; j++) {
                     String columnName = metadata.getColumnName(j);
                     ObjectHelper.setter(o, columnName, rs.getObject(j));

@@ -60,7 +60,7 @@ public class PlayerListImpl implements PlayerList {
             session = FactorySession.openSession();
             player = (Player) session.get(Player.class, "userName", userName);
             if(player != null) {
-                List<Ability> la = session.findPlayerAbilities(player.getIdPlayer());
+                List<Ability> la = session.findPlayerAbilities(player.getIdPlayer(), Ability.class);
                 for(Ability a: la){
                     logger.info(userName + " ability: " + a.getAbilityName());
                 }
