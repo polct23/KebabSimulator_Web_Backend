@@ -141,23 +141,26 @@ public class PlayerListImpl implements PlayerList {
     public Player getPlayer(String userName) {
         logger.info("getUser(" + userName + ")");
         Session session = null;
+        Player player = null; // Inicializa player como null
 
         try {
             session = FactorySession.openSession();
-            Player player = (Player) session.get(Player.class, "userName", userName);
-            logger.info("getUser(" + userName + "): " + player);
-            return player;
-
+            player = (Player) session.get(Player.class, "userName", userName);
+            if (player != null) {
+                logger.info("getUser(" + userName + "): " + player);
+            } else {
+                logger.info("Player not found for username: " + userName);
+            }
         } catch (Exception e){
             e.printStackTrace();
+            logger.error("Error fetching player: " + e.getMessage());
         } finally {
             if (session != null) {
                 session.close();
             }
         }
 
-        logger.info("not found " + userName);
-        return null;
+        return player; // Devuelve player, pueda ser null o no
     }
     public List<Player> getPlayers() {
         Session session = null;
@@ -230,44 +233,51 @@ public class PlayerListImpl implements PlayerList {
         try {
             session = FactorySession.openSession();
             Player player = (Player) session.get(Player.class, "userName", userName);
-            if(player.getPassword().equals(password)) {
+
+            if (player != null && player.getPassword().equals(password)) {
                 ans = true;
-            }
-            else{
+            } else {
                 throw new WrongCredentialsException();
             }
-            logger.info("getPlayer(" + userName + "): " + player);
-            return ans;
 
-        } catch (Exception e){
-            e.printStackTrace();
+            logger.info("getPlayer(" + userName + "): " + player);
+        } catch (Exception e) {
+            // Captura cualquier excepción y la convierte en WrongCredentialsException
+            throw new WrongCredentialsException();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
 
         return ans;
     }
+
     @Override
-    public Player updatePassword(String userName, String newPassword){
+    public Player updatePassword(String userName, String newPassword) {
         Session session = null;
-        Player player;
+        Player player = null; // Inicializamos player como null
         try {
             session = FactorySession.openSession();
             player = (Player) session.get(Player.class, "userName", userName);
-            if(player != null) {
-                session.updateJugador("password", userName , newPassword);
-                logger.info("password updated correctly");
-                return player;
+            logger.info("getPlayer(" + userName + "): " + player);
+            if (player != null) {
+                // Actualizamos la contraseña del jugador
+                player.setPassword(newPassword);
+                session.updateJugador("password", userName, newPassword); // Actualizamos el objeto en la sesión
+                logger.info("Password updated successfully for user: " + userName);
             } else {
-                logger.warn("not found " + userName);
-                return null;
+                logger.warn("User not found: " + userName);
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             if (session != null) {
                 session.close();
             }
         }
-        return null;
+        return player; // Retornamos el jugador actualizado o null si no se encontró
     }
+
 
 }

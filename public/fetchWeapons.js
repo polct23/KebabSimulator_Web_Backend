@@ -24,7 +24,6 @@ function fetchWeapons() {
         });
 }
 
-
 function displayWeapons(data) {
     const listElement = document.getElementById('weapons-list');
     listElement.innerHTML = '';
@@ -53,19 +52,35 @@ function createWeaponCard(ability) {
     description.className = 'card-text';
     description.textContent = `Description: ${ability.description}`;
 
-    const damage = document.createElement('p');
-    damage.className = 'card-text';
-    damage.textContent = `Damage: ${ability.damage}`;
+    const value = document.createElement('p');
+    value.className = 'card-text';
+    value.textContent = `Value: ${ability.value}`;
 
     const price = document.createElement('p');
     price.className = 'card-text';
     price.textContent = `Price: $${ability.price}`;
 
+    // Imagen
+    const image = document.createElement('img');
+    image.className = 'card-img-top';
+    image.src = ability.imageURL; // URL de la imagen de la habilidad
+    image.alt = ability.abilityName; // Nombre de la habilidad como texto alternativo
+    image.style.maxWidth = '100px'; // Tamaño máximo de la imagen
+
+    const buyButton = document.createElement('button');
+    buyButton.className = 'btn btn-primary';
+    buyButton.textContent = 'Buy';
+    buyButton.onclick = function() {
+        purchaseItem(ability.idAbility); // Pasar solo el ID de la habilidad
+    };
+
+    cardBody.appendChild(image); // Agregar la imagen al cuerpo de la tarjeta
     cardBody.appendChild(abilityName);
     cardBody.appendChild(idAbility);
     cardBody.appendChild(description);
-    cardBody.appendChild(damage);
+    cardBody.appendChild(value);
     cardBody.appendChild(price);
+    cardBody.appendChild(buyButton);
 
     card.appendChild(cardBody);
     return card;

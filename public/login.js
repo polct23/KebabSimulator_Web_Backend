@@ -1,3 +1,5 @@
+// login.js
+
 async function handleLogin(username, password) {
     const url = '/dsaApp/players/login';
     const data = {
@@ -17,21 +19,26 @@ async function handleLogin(username, password) {
         const response = await fetch(url, fetchOptions);
         const result = await response.json();
 
-        if (result.message === "Login Successful") {
-            console.log('Login successful');
-            // Almacena el estado del usuario como autenticado en localStorage
-            localStorage.setItem('userStatus', 'loggedIn');
-            localStorage.setItem('username', username);
-            localStorage.setItem('password', password);
+        if (response.ok) {
+            if (result.message === "Login Successful") {
+                console.log('Login successful');
+                // Almacena el estado del usuario como autenticado en localStorage
+                localStorage.setItem('userStatus', 'loggedIn');
+                localStorage.setItem('username', username);
+                localStorage.setItem('password', password);
 
-            // Mostrar modal de éxito
-            $('#successModal').modal('show');
-            document.getElementById('successModalButton').addEventListener('click', function() {
-                window.location.href = '/menu.html'; // Redirige a la página menu.html
-            });
+                // Mostrar modal de éxito
+                $('#successModal').modal('show');
+                document.getElementById('successModalButton').addEventListener('click', function() {
+                    window.location.href = '/menu.html'; // Redirige a la página menu.html
+                });
+            } else {
+                // Si el mensaje no indica un inicio de sesión exitoso, lanza un error
+                throw new Error(result.message || 'Unknown login error');
+            }
         } else {
-            // Si el mensaje no indica un inicio de sesión exitoso, lanza un error
-            throw new Error(result.message || 'Unknown login error');
+            // Si la respuesta no es exitosa, lanza un error con el mensaje de error recibido
+            throw new Error(result.error || 'Failed to login');
         }
     } catch (error) {
         console.error('Login Error:', error);
@@ -40,13 +47,3 @@ async function handleLogin(username, password) {
         $('#errorModal').modal('show');
     }
 }
-
-document.addEventListener('DOMContentLoaded', function() {
-    var loginForm = document.getElementById('login-form');
-    loginForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-        var username = document.getElementById('login-username').value;
-        var password = document.getElementById('login-password').value;
-        handleLogin(username, password);
-    });
-});
