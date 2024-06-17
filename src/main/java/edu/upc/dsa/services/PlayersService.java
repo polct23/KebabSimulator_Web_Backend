@@ -14,6 +14,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.apache.log4j.Logger;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
@@ -25,6 +26,7 @@ import java.util.List;
 @Path("/players")
 public class PlayersService {
     private final PlayerList pl;
+    final static Logger logger = Logger.getLogger(PlayersService.class);
 
     public PlayersService() {
         this.pl = PlayerListImpl.getInstance();
@@ -51,9 +53,16 @@ public class PlayersService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPlayer(@PathParam("userName") String userName) {
         Player player = this.pl.getPlayer(userName);
-        if(player == null) return Response.status(404).build();
-        else return Response.status(200).entity(player).build();
+        if (player != null) {
+            logger.info("Player found: " + player.toString());
+            return Response.status(200).entity(player).build();
+        } else {
+            logger.info("Player not found for username: " + userName);
+            return Response.status(404).entity("User not found").build();
+        }
     }
+
+
     @POST
     @ApiOperation(value = "create a new Player", notes = "---")
     @ApiResponses(value = {
@@ -93,10 +102,11 @@ public class PlayersService {
             @ApiResponse(code = 404, message = "Player not found")
     })
     @Path("/updateUserPassword")
-    public Response updateUserPassword(TransferClass t) {
-        Player p = this.pl.updatePassword(t.getUserName(), t.getNewPasword());
-        if(p==null) return Response.status(404).build();
-        return Response.status(201).build();
+    public Response updateUserPassword(Player player) {
+        logger.info("Updating User Password: " + player.toString());
+        Player p = this.pl.updatePassword(player.getUserName(), player.getPassword());
+        logger.info("Player updated: " + p.toString());
+        return Response.status(200).entity(p).build();
     }
 
     @POST

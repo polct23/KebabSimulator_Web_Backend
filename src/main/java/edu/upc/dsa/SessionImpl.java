@@ -134,12 +134,22 @@ public class SessionImpl implements Session {
             pstm.executeUpdate();
 
         } catch (SQLIntegrityConstraintViolationException e) {
-            // Handle constraint violation exception (e.g., unique constraint violation)
-            throw new SQLIntegrityConstraintViolationException();
-        }  catch (SQLException e) {
-            e.printStackTrace();
+            // Re-throws the exception to propagate it to the caller
+            throw e;
+        } catch (SQLException e) {
+            e.printStackTrace(); // Or handle SQLException appropriately
+        } finally {
+            // Close PreparedStatement in finally block
+            if (pstm != null) {
+                try {
+                    pstm.close();
+                } catch (SQLException e) {
+                    e.printStackTrace(); // Or handle SQLException appropriately
+                }
+            }
         }
     }
+
 
     public void delete(Object entity, String columna) {
         String deleteQuery = QueryHelper.createQueryDELETE(entity.getClass(), columna);
