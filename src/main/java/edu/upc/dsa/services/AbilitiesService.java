@@ -47,7 +47,7 @@ public class AbilitiesService {
     @Path("/newAbility")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response newAbility(Ability ability) {
-        Ability newAbility = new Ability(ability.getAbilityName(), ability.getDescription(), ability.getValue(), ability.getPrice());
+        Ability newAbility = new Ability(ability.getAbilityName(), ability.getDescription(), ability.getValue(), ability.getPrice(), ability.getImageURL());
         if(newAbility.getIdAbility()==null || newAbility.getAbilityName()==null) return Response.status(500).entity(newAbility).build();
         this.wl.addAbility(newAbility);
         return Response.status(201).entity(newAbility).build();

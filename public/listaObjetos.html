@@ -2,156 +2,145 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Kebab Simulator</title>
+    <title>Kebab Simulator Shop</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Mouse+Memoirs&display=swap');
         body {
             background-color: #fbf1a9 !important;
             font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
         }
         h1 {
             text-align: center;
             font-family: 'Mouse Memoirs', sans-serif;
-            margin-top: 50px;
+            margin-top: 30px;
             color: #6c757d;
+            font-size: 36px;
         }
         #weapons-list {
-            padding-left: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
         }
         .card {
             border-radius: 15px;
             background-color: #f8d7da;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             color: #495057;
-            margin-bottom: 20px;
+            margin: 15px;
+            width: 300px;
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
         }
         .card-body {
             padding: 20px;
+            min-height: 150px; /* Altura mínima para asegurar alineación */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
-        .alert-auto-login {
-            margin-top: 20px;
+        .card-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .card-subtitle {
+            color: #6c757d;
+            margin-bottom: 15px;
+        }
+        .card-text {
+            margin-bottom: 10px;
+        }
+        .card-img {
+            border-radius: 15px 15px 0 0; /* Redondear esquinas superior de la imagen */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Sombra */
+            width: 100%;
+            height: auto;
+            object-fit: cover; /* Para que la imagen se ajuste */
+        }
+        .btn-buy {
+            width: 100%;
+            margin-top: 15px;
         }
     </style>
 </head>
 <body>
-<h1>Kebab Simulator</h1>
+<h1>Kebab Simulator Shop</h1>
 <div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div id="weapons-list" class="list-group">
-                <!-- Los datos de las armas se cargarán aquí por el script fetchWeapons.js -->
-            </div>
-        </div>
+    <div id="weapons-list">
+        <!-- Los datos de las armas se cargarán aquí -->
     </div>
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div id="message" class="alert alert-info alert-auto-login" style="display: none;">You have been automatically logged in.</div>
+</div>
+
+<!-- Modal de éxito -->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Success</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Ability purchased successfully!
+            </div>
         </div>
     </div>
 </div>
 
+<!-- Modal de error -->
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Failed to purchase ability.
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de habilidad ya comprada -->
+<div class="modal fade" id="alreadyPurchasedModal" tabindex="-1" role="dialog" aria-labelledby="alreadyPurchasedModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="alreadyPurchasedModalLabel">Info</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Ability already purchased.
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="fetchWeapons.js"></script>
+<script src="purchaseItem.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        fetchWeapons(); // Siempre tratar de obtener la versión más reciente de las armas
-    });
-
-    function fetchWeapons() {
-        fetch('/dsaApp/abilities/getAbilities', {
-            headers: {
-                'Cache-Control': 'no-cache', // Indica al navegador no almacenar la respuesta en caché
-                'Pragma': 'no-cache' // Compatibilidad con HTTP/1.0
-            }
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok ' + response.statusText);
-                }
-                return response.json();
-            })
-            .then(data => {
-                displayWeapons(data); // Mostrar los datos directamente obtenidos del servidor
-            })
-            .catch(error => {
-                console.error('Fetch error:', error);
-                alert('Failed to load weapons from server. Please try again later.');
-            });
-    }
-
-    function displayWeapons(data) {
-        const listElement = document.getElementById('weapons-list');
-        listElement.innerHTML = '';
-        data.forEach(ability => {
-            const card = createWeaponCard(ability);
-            listElement.appendChild(card);
-        });
-    }
-
-    function createWeaponCard(ability) {
-        const card = document.createElement('div');
-        card.className = 'card mb-3';
-
-        const cardBody = document.createElement('div');
-        cardBody.className = 'card-body';
-
-        const abilityName = document.createElement('h5');
-        abilityName.className = 'card-title';
-        abilityName.textContent = ability.abilityName;
-
-        const idAbility = document.createElement('h6');
-        idAbility.className = 'card-subtitle mb-2 text-muted';
-        idAbility.textContent = `ID: ${ability.idAbility}`;
-
-        const description = document.createElement('p');
-        description.className = 'card-text';
-        description.textContent = `Description: ${ability.description}`;
-
-        const damage = document.createElement('p');
-        damage.className = 'card-text';
-        damage.textContent = `Damage: ${ability.damage}`;
-
-        const price = document.createElement('p');
-        price.className = 'card-text';
-        price.textContent = `Price: $${ability.price}`;
-
-        const buyButton = document.createElement('button');
-        buyButton.className = 'btn btn-primary';
-        buyButton.textContent = 'Buy';
-        buyButton.onclick = function() {
-            purchaseItem(ability.idAbility); // Pasar solo el ID de la habilidad
-        };
-
-        cardBody.appendChild(abilityName);
-        cardBody.appendChild(idAbility);
-        cardBody.appendChild(description);
-        cardBody.appendChild(damage);
-        cardBody.appendChild(price);
-        cardBody.appendChild(buyButton);
-
-        card.appendChild(cardBody);
-        return card;
-    }
-
-
-    // Verifica si el usuario está autenticado
     document.addEventListener('DOMContentLoaded', function() {
         const userStatus = localStorage.getItem('userStatus');
         if (userStatus !== 'loggedIn') {
             alert('You must be logged in to access this page.');
             window.location.href = '/';
         }
-
-        // Verifica si hay un inicio de sesión automático
-        const autoLogin = localStorage.getItem('autoLogin');
-        if (autoLogin === 'true') {
-            // Muestra el mensaje de inicio de sesión automático
-            const message = document.getElementById('message');
-            message.style.display = 'block';
-            // Limpia el indicador de inicio de sesión automático
-            localStorage.removeItem('autoLogin');
-        }
     });
 </script>
-<script src="purchaseItem.js"></script>
+
+<!-- jQuery y Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

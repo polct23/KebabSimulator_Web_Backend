@@ -6,7 +6,7 @@ function purchaseItem(abilityId) {
     const username = localStorage.getItem('username');
 
     if (!username) {
-        alert('Username not found. Please log in.');
+        $('#errorModal').modal('show'); // Mostrar modal de error si no hay nombre de usuario
         return;
     }
 
@@ -25,11 +25,11 @@ function purchaseItem(abilityId) {
     })
         .then(response => {
             if (response.ok) {
-                alert('Ability purchased successfully!');
+                $('#successModal').modal('show'); // Mostrar modal de éxito
             } else if (response.status === 409) {
-                alert('Ability already purchased.');
+                $('#alreadyPurchasedModal').modal('show'); // Mostrar modal si la habilidad ya está comprada
             } else {
-                alert('Failed to purchase ability.');
+                $('#errorModal').modal('show'); // Mostrar modal de error si falla la compra
             }
         })
         .catch(error => console.error('Error purchasing ability:', error));
