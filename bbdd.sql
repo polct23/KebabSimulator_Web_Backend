@@ -93,7 +93,8 @@ DROP TABLE IF EXISTS `mission`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mission` (
   `description` longtext DEFAULT NULL,
-  `reward` int(11) DEFAULT NULL
+  `reward` int(11) DEFAULT NULL,
+  `idMission` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -104,12 +105,12 @@ CREATE TABLE `mission` (
 LOCK TABLES `mission` WRITE;
 /*!40000 ALTER TABLE `mission` DISABLE KEYS */;
 INSERT INTO `mission` VALUES
-('Matar a 5 Slimes',10),
-('Recoger la madera',10),
-('Matar a 3 Ratas',45),
-('Busca la casa del inspector',0),
-('Matar a los bichos de la cueva',100),
-('Mata al inspector',300);
+('Matar a 5 Slimes',10,1),
+('Recoger la madera',10,2),
+('Matar a 3 Ratas',45,3),
+('Busca la casa del inspector',0,4),
+('Matar a los bichos de la cueva',100,5),
+('Mata al inspector',300,6);
 /*!40000 ALTER TABLE `mission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -182,4 +183,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-16 20:43:12
+-- Dump completed on 2024-06-17 10:15:23
