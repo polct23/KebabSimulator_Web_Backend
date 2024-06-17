@@ -103,18 +103,25 @@ public class PlayersService {
     @ApiOperation(value = "Player Login", notes = "Verifies user credentials.")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Login Successful"),
-            @ApiResponse(code = 401, message = "Unauthorized")
+            @ApiResponse(code = 401, message = "Unauthorized", response = String.class), // Devolver un mensaje de error en formato JSON
+            @ApiResponse(code = 500, message = "Internal Server Error", response = String.class) // Error interno del servidor
     })
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response loginUser(Player player) throws WrongCredentialsException {
-        if (pl.authenticateUser(player.getUserName(), player.getPassword())) {
+    public Response loginUser(Player player) {
+        try {
+            pl.authenticateUser(player.getUserName(), player.getPassword());
             return Response.status(Response.Status.OK).entity("{\"message\":\"Login Successful\"}").build();
-        } else {
-            return Response.status(Response.Status.UNAUTHORIZED).entity("{\"message\":\"Unauthorized - Incorrect username or password\"}").build();
+
+        } catch (WrongCredentialsException e) {
+            // Devolver un mensaje de error en formato JSON
+            return Response.status(Response.Status.UNAUTHORIZED).entity("{\"error\":\"Incorrect username or password\"}").build();
         }
     }
+
+
+
 
     @GET
     @ApiOperation(value = "get Player", notes = "---")

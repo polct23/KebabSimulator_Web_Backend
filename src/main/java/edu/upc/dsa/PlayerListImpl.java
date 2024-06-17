@@ -230,21 +230,26 @@ public class PlayerListImpl implements PlayerList {
         try {
             session = FactorySession.openSession();
             Player player = (Player) session.get(Player.class, "userName", userName);
-            if(player.getPassword().equals(password)) {
+
+            if (player != null && player.getPassword().equals(password)) {
                 ans = true;
-            }
-            else{
+            } else {
                 throw new WrongCredentialsException();
             }
-            logger.info("getPlayer(" + userName + "): " + player);
-            return ans;
 
-        } catch (Exception e){
-            e.printStackTrace();
+            logger.info("getPlayer(" + userName + "): " + player);
+        } catch (Exception e) {
+            // Captura cualquier excepción y la convierte en WrongCredentialsException
+            throw new WrongCredentialsException();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
 
         return ans;
     }
+
     @Override
     public Player updatePassword(String userName, String newPassword){
         Session session = null;

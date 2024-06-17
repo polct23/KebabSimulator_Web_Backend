@@ -1,3 +1,5 @@
+// login.js
+
 async function handleLogin(username, password) {
     const url = '/dsaApp/players/login';
     const data = {
@@ -27,7 +29,7 @@ async function handleLogin(username, password) {
             // Mostrar modal de éxito
             $('#successModal').modal('show');
             document.getElementById('successModalButton').addEventListener('click', function() {
-                window.location.href = 'menu.html'; // Redirige a la página menu.html
+                window.location.href = '/menu.html'; // Redirige a la página menu.html
             });
         } else {
             // Si el mensaje no indica un inicio de sesión exitoso, lanza un error
@@ -41,12 +43,4 @@ async function handleLogin(username, password) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    var loginForm = document.getElementById('login-form');
-    loginForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-        var username = document.getElementById('login-username').value;
-        var password = document.getElementById('login-password').value;
-        handleLogin(username, password);
-    });
-});
+

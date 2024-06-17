@@ -2,9 +2,71 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #fbf1a9;
+            font-family: 'Roboto', sans-serif;
+            padding-top: 20px;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            color: #6c757d;
+            margin-bottom: 40px;
+            margin-top: 20px;
+        }
+        .container {
+            max-width: 600px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .btn {
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
+<div class="container">
+    <h1>User Profile</h1>
+    <form id="profile-form">
+        <div class="form-group">
+            <label for="idPlayer">ID:</label>
+            <input type="text" id="idPlayer" name="idPlayer" class="form-control" readonly>
+        </div>
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" class="form-control" readonly>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" class="form-control" readonly>
+        </div>
+        <div class="form-group">
+            <label for="currentLevel">Current Level:</label>
+            <input type="text" id="currentLevel" name="currentLevel" class="form-control" readonly>
+        </div>
+        <div class="form-group">
+            <label for="currentMission">Current Mission:</label>
+            <input type="text" id="currentMission" name="currentMission" class="form-control" readonly>
+        </div>
+        <div class="form-group">
+            <label for="money">Money:</label>
+            <input type="text" id="money" name="money" class="form-control" readonly>
+        </div>
+        <div class="form-group">
+            <label for="password">New Password:</label>
+            <input type="password" id="password" name="password" class="form-control">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="updatePassword()">Change Password</button>
+    </form>
+</div>
 
+<script src="profile.js"></script>
 </body>
 </html>
