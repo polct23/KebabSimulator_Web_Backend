@@ -52,9 +52,9 @@ function createWeaponCard(ability) {
     description.className = 'card-text';
     description.textContent = `Description: ${ability.description}`;
 
-    const damage = document.createElement('p');
-    damage.className = 'card-text';
-    damage.textContent = `Damage: ${ability.damage}`;
+    const value = document.createElement('p');
+    value.className = 'card-text';
+    value.textContent = `Value: ${ability.value}`;
 
     const price = document.createElement('p');
     price.className = 'card-text';
@@ -78,7 +78,7 @@ function createWeaponCard(ability) {
     cardBody.appendChild(abilityName);
     cardBody.appendChild(idAbility);
     cardBody.appendChild(description);
-    cardBody.appendChild(damage);
+    cardBody.appendChild(value);
     cardBody.appendChild(price);
     cardBody.appendChild(buyButton);
 
