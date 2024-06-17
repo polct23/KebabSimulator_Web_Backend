@@ -56,8 +56,11 @@ function fetchUserData(username) {
 
 // Fetch user data when the page loads
 window.onload = function() {
-    // Assuming username is passed as query parameter, you can change this
-    var urlParams = new URLSearchParams(window.location.search);
-    var username = urlParams.get('username');
-    fetchUserData(username);
+    // Get username from localStorage
+    var username = localStorage.getItem('username');
+    if (username) {
+        fetchUserData(username);
+    } else {
+        console.error('Username not found in localStorage.');
+    }
 };
