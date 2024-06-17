@@ -1,5 +1,3 @@
-// profile.js
-
 // Function to fetch user data and populate the form
 function fetchUserData(username) {
     fetch(`/dsaApp/players/${username}`)
@@ -25,8 +23,9 @@ function fetchUserData(username) {
             if (error.message === 'Failed to fetch user data') {
                 errorMessage = 'Failed to fetch user data. User may not exist.';
             }
-            // Display error message to the user
-            alert(errorMessage);
+            // Display error message using modal
+            document.querySelector('#errorModal .modal-body').textContent = errorMessage;
+            $('#errorModal').modal('show');
         });
 }
 
@@ -40,6 +39,7 @@ window.onload = function() {
         console.error('Username not found in localStorage.');
     }
 };
+
 function updatePassword() {
     var idPlayer = document.getElementById('idPlayer').value;
     var username = document.getElementById('username').value;
@@ -56,8 +56,7 @@ function updatePassword() {
         email: email,
         currentLevel: currentLevel,
         currentMission: currentMission,
-        money: money,
-
+        money: money
     };
 
     // Send request to update password
@@ -70,12 +69,16 @@ function updatePassword() {
     })
         .then(function(response) {
             if (response.ok) {
-                alert('Password updated successfully!');
+                // Display success message using modal
+                $('#successModal').modal('show');
             } else {
-                alert('Failed to update password.');
+                // Display error message using modal
+                $('#errorModal').modal('show');
             }
         })
         .catch(function(error) {
             console.log('Error:', error);
+            // Display error message using modal
+            $('#errorModal').modal('show');
         });
 }

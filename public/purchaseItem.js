@@ -16,7 +16,7 @@ function purchaseItem(abilityId) {
     };
 
     // Realizar una solicitud para comprar la habilidad
-    fetch(`http://localhost:8080/dsaApp/players/buyAbility/${abilityId}`, {
+    fetch(`/dsaApp/players/buyAbility/${abilityId}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
