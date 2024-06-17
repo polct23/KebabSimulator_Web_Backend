@@ -7,8 +7,15 @@ public class Mission {
     private int reward;
     private String description;
 
+    private int idMission;
 
+    public int getIdMission() {
+        return idMission;
+    }
 
+    public void setIdMission(int idMission) {
+        this.idMission = idMission;
+    }
 
     public int getReward() {
         return reward;
@@ -28,8 +35,9 @@ public class Mission {
 
     public Mission() {}
 
-    public Mission( int reward, String description) {
+    public Mission( int reward, String description, int idMission) {
         this.reward = reward;
         this.description = description;
+        this.idMission = idMission;
     }
 }

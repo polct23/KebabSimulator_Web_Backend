@@ -49,7 +49,7 @@ public class MissionsService {
     @Path("/newMission")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response newMission(Mission mission) {
-        Mission newMission = new Mission( mission.getReward(), mission.getDescription());
+        Mission newMission = new Mission(mission.getReward(), mission.getDescription(), mission.getIdMission());
         if(newMission.getDescription()==null) return Response.status(500).entity(newMission).build();
         this.ml.addMission(newMission);
         return Response.status(201).entity(newMission).build();
