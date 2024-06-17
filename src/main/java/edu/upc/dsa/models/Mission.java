@@ -35,7 +35,7 @@ public class Mission {
 
     public Mission() {}
 
-    public Mission( int reward, String description, int idMission) {
+    public Mission( String description, int reward,  int idMission) {
         this.reward = reward;
         this.description = description;
         this.idMission = idMission;
