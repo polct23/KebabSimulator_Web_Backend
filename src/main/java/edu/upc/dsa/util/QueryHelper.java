@@ -89,7 +89,7 @@ public class QueryHelper {
     }
     public static String createQueryUPDATEPlayersAblity(String columna) {
         StringBuffer sb = new StringBuffer();
-        sb.append("UPDATE PlayersAbilities ");
+        sb.append("UPDATE PlayersAbility ");
         sb.append("SET " + columna + " = ?");
         sb.append(" WHERE USERNAME = ?");
 
@@ -98,8 +98,8 @@ public class QueryHelper {
 
     public static String createQueryForPlayerAbilities() {
         return "SELECT a.idAbility, a.abilityName, a.description, a.value, a.price FROM Ability a " +
-                "JOIN playersability pa ON a.idAbility = pa.idAbility " +
-                "JOIN player p ON pa.idPlayer = p.idPlayer " +
+                "JOIN PlayersAbility pa ON a.idAbility = pa.idAbility " +
+                "JOIN Player p ON pa.idPlayer = p.idPlayer " +
                 "WHERE p.idPlayer = ?";
     }
 }
