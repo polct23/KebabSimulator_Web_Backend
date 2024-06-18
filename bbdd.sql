@@ -26,11 +26,14 @@ CREATE TABLE IF NOT EXISTS `ability` (
   UNIQUE KEY `idAbility` (`idAbility`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla kebabsimulatordb.ability: ~3 rows (aproximadamente)
-REPLACE INTO `ability` (`idAbility`, `abilityName`, `description`, `value`, `price`, `imageURL`) VALUES
-	('12hhd', 'Cuchillo', 'afilado', 3, 2.5, 'https://www.cofan.es/images/content/1024x682/web1_41002512bl_01.jpg'),
-	('XX2', 'Palo', 'Este palo pega mucho', 12, 15, 'https://media.adeo.com/marketplace/MKP/87954072/486930f932800915e5e3db1466ea6b65.jpeg?width=3000&height=3000&format=jpg&quality=80&fit=bounds'),
-	('XX3', 'Pala', 'Esta pala es muy larga', 6, 6, 'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTckmAnLOjrojO0G9cQDR7ERDg2klvTItAd7VfFOM2Y6rMJNHCx6nRpDwz4N9C2MJbLt3K8EAZxD_8-cbJ4rbi-K59wHgpml01L4ooqJTbLL4WYDxnBkBc_');
+-- Volcando datos para la tabla kebabsimulatordb.ability: ~6 rows (aproximadamente)
+INSERT INTO `ability` (`idAbility`, `abilityName`, `description`, `value`, `price`, `imageURL`) VALUES
+	('AA1', 'Vida Extra 1', 'Aumenta tu vida máxima en un 15%', 15, 200, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-Yhj3T0kNU56QWBDfIm3PTRFW1qYVOG6MSw&s'),
+	('AA2', 'Vida Extra 2', 'Aumenta tu vida máxima en un 30%', 30, 300, 'https://i.pinimg.com/564x/95/2c/2a/952c2a8111315b098da9928079fa7353.jpg'),
+	('AA3', 'Velocidad 1', 'Aumenta un poco tu velocidad', 10, 100, 'https://images.vexels.com/media/users/3/131405/isolated/lists/eba88a6668c8f1d42dab4097cc99851d-hombre-corriendo-silueta-16.png'),
+	('AA4', 'Velocidad 2', 'Aumenta mucho tu velocidad', 20, 200, 'https://img.freepik.com/vector-premium/hombre-corriendo-vector-blanco-negro_753733-81.jpg'),
+	('AA5', 'Arma 1', 'Aumenta tu fuerza 20 puntos', 20, 75, 'https://thumbs.dreamstime.com/b/icono-del-vector-de-la-silueta-espada-objeto-aislado-132073721.jpg'),
+	('AA6', 'Arma 2', 'Aumenta tu fuerza hasta 50 puntos', 50, 275, 'https://previews.123rf.com/images/zolotonsmailru/zolotonsmailru2009/zolotonsmailru200901411/154853375-silueta-de-una-espada-ilustraci%C3%B3n-de-sables.jpg');
 
 -- Volcando estructura para tabla kebabsimulatordb.enemy
 CREATE TABLE IF NOT EXISTS `enemy` (
@@ -43,10 +46,14 @@ CREATE TABLE IF NOT EXISTS `enemy` (
   UNIQUE KEY `idEnemy` (`idEnemy`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla kebabsimulatordb.enemy: ~1 rows (aproximadamente)
-REPLACE INTO `enemy` (`idEnemy`, `speed`, `description`, `meat`, `name`) VALUES
-	('XX1', 5, 'Es una rata fea y rápida', 2, 'Rata'),
-	('XX2', 10, 'Una cucaracha asquerosa', 1, 'Cucaracha');
+-- Volcando datos para la tabla kebabsimulatordb.enemy: ~6 rows (aproximadamente)
+INSERT INTO `enemy` (`idEnemy`, `speed`, `description`, `meat`, `name`) VALUES
+	('XX1', 15, 'Enemigo muy agresivo y peligroso', 45, 'Escarabajo'),
+	('XX2', 3, 'Enemigo mejorado con movimiento aleatorio', 30, 'Cucaracha'),
+	('XX3', 3, 'Enemigo inmortal con movimiento fijo', 0, 'Fantasma'),
+	('XX4', 10, 'Enemigo con movimiento evasivo', 10, 'Rata'),
+	('XX5', 2, 'Enemigo básico con movimiento aleatorio', 10, 'Slime'),
+	('XX6', 10, 'Jefe final', 300, '???');
 
 -- Volcando estructura para tabla kebabsimulatordb.mission
 CREATE TABLE IF NOT EXISTS `mission` (
@@ -57,7 +64,14 @@ CREATE TABLE IF NOT EXISTS `mission` (
   UNIQUE KEY `idMission` (`idMission`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla kebabsimulatordb.mission: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla kebabsimulatordb.mission: ~6 rows (aproximadamente)
+INSERT INTO `mission` (`description`, `reward`, `idMission`) VALUES
+	('Matar a 5 Slimes', 10, '1'),
+	('Recoger la madera', 10, '2'),
+	('Matar a 3 ratas', 45, '3'),
+	('Buscar la casa del Inspector', 0, '4'),
+	('Matar a los bichos de la cueva', 100, '5'),
+	('Matar al Inspector', 300, '6');
 
 -- Volcando estructura para tabla kebabsimulatordb.player
 CREATE TABLE IF NOT EXISTS `player` (
@@ -73,8 +87,8 @@ CREATE TABLE IF NOT EXISTS `player` (
   UNIQUE KEY `userName` (`userName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla kebabsimulatordb.player: ~0 rows (aproximadamente)
-REPLACE INTO `player` (`idPlayer`, `userName`, `password`, `email`, `money`, `currentMission`, `currentLevel`) VALUES
+-- Volcando datos para la tabla kebabsimulatordb.player: ~1 rows (aproximadamente)
+INSERT INTO `player` (`idPlayer`, `userName`, `password`, `email`, `money`, `currentMission`, `currentLevel`) VALUES
 	('QaMbq4R4h50451237155', 'didac', '1234', 'didac@dsa.upc', 0, 0, 0);
 
 -- Volcando estructura para tabla kebabsimulatordb.playersability
@@ -87,11 +101,7 @@ CREATE TABLE IF NOT EXISTS `playersability` (
   CONSTRAINT `fkIdPlayer` FOREIGN KEY (`idPlayer`) REFERENCES `player` (`idPlayer`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla kebabsimulatordb.playersability: ~2 rows (aproximadamente)
-REPLACE INTO `playersability` (`idAbility`, `idPlayer`) VALUES
-	('XX2', 'QaMbq4R4h50451237155'),
-	('XX3', 'QaMbq4R4h50451237155'),
-	('12hhd', 'QaMbq4R4h50451237155');
+-- Volcando datos para la tabla kebabsimulatordb.playersability: ~0 rows (aproximadamente)
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
