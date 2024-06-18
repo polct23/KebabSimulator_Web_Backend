@@ -26,7 +26,11 @@ CREATE TABLE IF NOT EXISTS `ability` (
   UNIQUE KEY `idAbility` (`idAbility`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- La exportación de datos fue deseleccionada.
+-- Volcando datos para la tabla kebabsimulatordb.ability: ~3 rows (aproximadamente)
+REPLACE INTO `ability` (`idAbility`, `abilityName`, `description`, `value`, `price`, `imageURL`) VALUES
+	('12hhd', 'Cuchillo', 'afilado', 3, 2.5, 'https://www.cofan.es/images/content/1024x682/web1_41002512bl_01.jpg'),
+	('XX2', 'Palo', 'Este palo pega mucho', 12, 15, 'https://media.adeo.com/marketplace/MKP/87954072/486930f932800915e5e3db1466ea6b65.jpeg?width=3000&height=3000&format=jpg&quality=80&fit=bounds'),
+	('XX3', 'Pala', 'Esta pala es muy larga', 6, 6, 'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTckmAnLOjrojO0G9cQDR7ERDg2klvTItAd7VfFOM2Y6rMJNHCx6nRpDwz4N9C2MJbLt3K8EAZxD_8-cbJ4rbi-K59wHgpml01L4ooqJTbLL4WYDxnBkBc_');
 
 -- Volcando estructura para tabla kebabsimulatordb.enemy
 CREATE TABLE IF NOT EXISTS `enemy` (
@@ -39,7 +43,10 @@ CREATE TABLE IF NOT EXISTS `enemy` (
   UNIQUE KEY `idEnemy` (`idEnemy`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- La exportación de datos fue deseleccionada.
+-- Volcando datos para la tabla kebabsimulatordb.enemy: ~1 rows (aproximadamente)
+REPLACE INTO `enemy` (`idEnemy`, `speed`, `description`, `meat`, `name`) VALUES
+	('XX1', 5, 'Es una rata fea y rápida', 2, 'Rata'),
+	('XX2', 10, 'Una cucaracha asquerosa', 1, 'Cucaracha');
 
 -- Volcando estructura para tabla kebabsimulatordb.mission
 CREATE TABLE IF NOT EXISTS `mission` (
@@ -50,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `mission` (
   UNIQUE KEY `idMission` (`idMission`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- La exportación de datos fue deseleccionada.
+-- Volcando datos para la tabla kebabsimulatordb.mission: ~0 rows (aproximadamente)
 
 -- Volcando estructura para tabla kebabsimulatordb.player
 CREATE TABLE IF NOT EXISTS `player` (
@@ -66,7 +73,9 @@ CREATE TABLE IF NOT EXISTS `player` (
   UNIQUE KEY `userName` (`userName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- La exportación de datos fue deseleccionada.
+-- Volcando datos para la tabla kebabsimulatordb.player: ~0 rows (aproximadamente)
+REPLACE INTO `player` (`idPlayer`, `userName`, `password`, `email`, `money`, `currentMission`, `currentLevel`) VALUES
+	('QaMbq4R4h50451237155', 'didac', '1234', 'didac@dsa.upc', 0, 0, 0);
 
 -- Volcando estructura para tabla kebabsimulatordb.playersability
 CREATE TABLE IF NOT EXISTS `playersability` (
@@ -78,7 +87,11 @@ CREATE TABLE IF NOT EXISTS `playersability` (
   CONSTRAINT `fkIdPlayer` FOREIGN KEY (`idPlayer`) REFERENCES `player` (`idPlayer`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- La exportación de datos fue deseleccionada.
+-- Volcando datos para la tabla kebabsimulatordb.playersability: ~2 rows (aproximadamente)
+REPLACE INTO `playersability` (`idAbility`, `idPlayer`) VALUES
+	('XX2', 'QaMbq4R4h50451237155'),
+	('XX3', 'QaMbq4R4h50451237155'),
+	('12hhd', 'QaMbq4R4h50451237155');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
