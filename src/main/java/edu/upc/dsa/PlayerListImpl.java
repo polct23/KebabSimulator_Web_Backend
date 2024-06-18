@@ -3,6 +3,7 @@ package edu.upc.dsa;
 import edu.upc.dsa.ExceptionMapper.AbilityAlreadyPurchasedException;
 import edu.upc.dsa.ExceptionMapper.UserNotFoundException;
 import edu.upc.dsa.ExceptionMapper.WrongCredentialsException;
+import edu.upc.dsa.ExceptionMapper.NotEnoughMoneyException;
 import edu.upc.dsa.models.Ability;
 import edu.upc.dsa.models.Player;
 
@@ -30,7 +31,7 @@ public class PlayerListImpl implements PlayerList {
     }
 
     @Override
-    public void buyAbilites(String userName, String idAbility) throws UserNotFoundException, AbilityAlreadyPurchasedException {
+    public void buyAbilites(String userName, String idAbility) throws UserNotFoundException, AbilityAlreadyPurchasedException, NotEnoughMoneyException {
         Session session = null;
         Player player;
         Ability ability;
@@ -51,17 +52,26 @@ public class PlayerListImpl implements PlayerList {
                 if (ability == null) {
                     throw new IllegalArgumentException("Ability not found with ID: " + idAbility);
                 }
+                if(player.getMoney() < ability.getPrice()) {
+                    throw new NotEnoughMoneyException();
+                }
+                else {
+                    player.setMoney(player.getMoney() - ability.getPrice());
+                    session.updateJugador("money", player.getUserName(), player.getMoney());
+                    // Crear la relación entre el jugador y la habilidad
+                    pa = new PlayersAbility(player.getIdPlayer(), idAbility);
+                    session.save(pa);
+                    logger.info(userName + " new ability bought correctly.");
+                }
 
-                // Crear la relación entre el jugador y la habilidad
-                pa = new PlayersAbility(player.getIdPlayer(), idAbility);
-                session.save(pa);
-                logger.info(userName + " new ability bought correctly.");
             } else {
                 logger.warn("User not found: " + userName);
                 throw new UserNotFoundException();
             }
         } catch (UserNotFoundException | AbilityAlreadyPurchasedException e) {
             throw e; // Re-lanzar las excepciones específicas
+        } catch (NotEnoughMoneyException e) {
+            throw e;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -225,6 +235,7 @@ public class PlayerListImpl implements PlayerList {
             }
         }
     }
+
 
     public boolean authenticateUser(String userName, String password) throws WrongCredentialsException {
         boolean ans = false;

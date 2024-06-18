@@ -1,6 +1,7 @@
 package edu.upc.dsa.services;
 
 import edu.upc.dsa.ExceptionMapper.AbilityAlreadyPurchasedException;
+import edu.upc.dsa.ExceptionMapper.NotEnoughMoneyException;
 import edu.upc.dsa.ExceptionMapper.UserNotFoundException;
 import edu.upc.dsa.ExceptionMapper.WrongCredentialsException;
 import edu.upc.dsa.models.Ability;
@@ -154,7 +155,8 @@ public class PlayersService {
     @ApiOperation(value = "Buy an ability", notes = "---")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful", response = Ability.class),
-            @ApiResponse(code = 409, message = "Ability already purchased")
+            @ApiResponse(code = 409, message = "Ability already purchased"),
+            @ApiResponse(code = 402, message = "Insufficient funds")
     })
     @Path("/buyAbility/{idAbility}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -169,10 +171,14 @@ public class PlayersService {
             // Si se realizó la compra correctamente, devolver una respuesta exitosa (código 200)
             return Response.status(200).build();
         } catch (UserNotFoundException | AbilityAlreadyPurchasedException e) {
-            // Si el jugador no se encuentra, devolver un código de estado 409 (conflicto)
+            // Si el jugador no se encuentra o la habilidad ya fue comprada, devolver código 409 (conflicto)
             return Response.status(409).build();
+        } catch (NotEnoughMoneyException e) {
+            // Si el jugador no tiene suficiente dinero, devolver código 402 (insufficient funds)
+            return Response.status(402).build();
         }
     }
+
     @PUT
     @ApiOperation(value = "update Player's advancements in the game", notes = "---")
     @ApiResponses(value = {

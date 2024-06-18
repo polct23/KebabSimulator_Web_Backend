@@ -65,10 +65,26 @@
             width: 100%;
             margin-top: 15px;
         }
+
+        /* Estilos para el bloque de dinero */
+        #money-info {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 5px 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            font-size: 16px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 <h1>Kebab Simulator Shop</h1>
+<div id="money-info"> <!-- Bloque de información de dinero -->
+    Money: $<span id="player-money">0</span>
+</div>
 <div class="container mt-5">
     <div id="weapons-list">
         <!-- Los datos de las armas se cargarán aquí -->
@@ -129,14 +145,56 @@
 <script src="fetchWeapons.js"></script>
 <script src="purchaseItem.js"></script>
 <script>
+    // Función para asegurar que el usuario esté autenticado antes de cargar la página
     document.addEventListener('DOMContentLoaded', function() {
         const userStatus = localStorage.getItem('userStatus');
         if (userStatus !== 'loggedIn') {
             alert('You must be logged in to access this page.');
-            window.location.href = '/';
+            window.location.href = '/'; // Redirigir al usuario a la página de inicio de sesión si no está autenticado
+        } else {
+            // Obtener y mostrar el dinero del jugador al cargar la página
+            fetchPlayerMoney();
         }
     });
+
+    // Función para obtener y mostrar el dinero del jugador
+    function fetchPlayerMoney() {
+        // Obtener el nombre de usuario del localStorage
+        var username = localStorage.getItem('username');
+        if (!username) {
+            console.error('Username not found in localStorage.');
+            return;
+        }
+
+        // Endpoint de la API para obtener el dinero del jugador
+        const endpoint = `/dsaApp/players/${username}`;
+
+        // Realizar la solicitud GET utilizando fetch
+        fetch(endpoint)
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch player money');
+                }
+                return response.json();
+            })
+            .then(function(data) {
+                // Actualizar el dinero del jugador en el HTML
+                document.getElementById('player-money').textContent = data.money;
+            })
+            .catch(function(error) {
+                console.error('Error fetching player money:', error.message);
+                // Manejar el error - Mostrar un mensaje al usuario
+                var errorMessage = 'Failed to fetch player money.';
+                if (error.message === 'Failed to fetch player money') {
+                    errorMessage = 'Failed to fetch player money. Player may not exist.';
+                }
+                // Mostrar mensaje de error utilizando un modal
+                document.querySelector('#errorModal .modal-body').textContent = errorMessage;
+                $('#errorModal').modal('show');
+            });
+    }
 </script>
+
 
 <!-- jQuery y Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
