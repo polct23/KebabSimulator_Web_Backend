@@ -135,7 +135,7 @@ public class PlayersService {
 
 
     @GET
-    @ApiOperation(value = "get Player", notes = "---")
+    @ApiOperation(value = "get Player Abilities", notes = "---")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful", response = Player.class),
             @ApiResponse(code = 404, message = "User not found")
@@ -144,6 +144,7 @@ public class PlayersService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPlayersAbilities(@PathParam("userName") String userName) throws UserNotFoundException {
         List<Ability> al= this.pl.getPlayersAbility(userName);
+        logger.info("Image URL: " + al.toString());
         if(al == null) return Response.status(404).build();
         else{
             GenericEntity<List<Ability>> entity = new GenericEntity<List<Ability>>(al){};

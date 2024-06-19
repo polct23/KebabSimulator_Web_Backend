@@ -97,7 +97,7 @@ public class QueryHelper {
     }
 
     public static String createQueryForPlayerAbilities() {
-        return "SELECT a.idAbility, a.abilityName, a.description, a.value, a.price FROM Ability a " +
+        return "SELECT a.idAbility, a.abilityName, a.description, a.value, a.price, a.imageURL FROM Ability a " +
                 "JOIN PlayersAbility pa ON a.idAbility = pa.idAbility " +
                 "JOIN Player p ON pa.idPlayer = p.idPlayer " +
                 "WHERE p.idPlayer = ?";
